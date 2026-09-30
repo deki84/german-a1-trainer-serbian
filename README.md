@@ -110,19 +110,19 @@ pnpm run dev -H 0.0.0.0    # dann http://<deine-IP>:3000 öffnen
 
 ### Umgebungsvariablen
 
-| Variable | Pflicht | Beschreibung |
-|---|---|---|
-| `GROQ_API_KEY` | ab Phase 7 | Key von console.groq.com. **Nie committen, nie `NEXT_PUBLIC_` davor!** |
-| `LLM_MODEL` | nein | Modell-ID bei Groq, Standard `openai/gpt-oss-120b`. Aktive Modelle: [Groq Models](https://console.groq.com/docs/models) |
+| Variable       | Pflicht    | Beschreibung                                                                                                            |
+| -------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `GROQ_API_KEY` | ab Phase 7 | Key von console.groq.com. **Nie committen, nie `NEXT_PUBLIC_` davor!**                                                  |
+| `LLM_MODEL`    | nein       | Modell-ID bei Groq, Standard `openai/gpt-oss-120b`. Aktive Modelle: [Groq Models](https://console.groq.com/docs/models) |
 
 ### Scripts
 
-| Befehl | Zweck |
-|---|---|
-| `pnpm run dev` | Entwicklungsserver |
-| `pnpm run build` | Produktions-Build |
-| `pnpm run lint` | ESLint |
-| `pnpm run test` | Vitest |
+| Befehl               | Zweck                              |
+| -------------------- | ---------------------------------- |
+| `pnpm run dev`       | Entwicklungsserver                 |
+| `pnpm run build`     | Produktions-Build                  |
+| `pnpm run lint`      | ESLint                             |
+| `pnpm run test`      | Vitest                             |
 | `pnpm run typecheck` | TypeScript prüfen (`tsc --noEmit`) |
 
 ## Authentifizierung
@@ -136,15 +136,15 @@ KI-Lehrer das API-Kontingent verbrauchen. Deshalb:
 
 ## Beispiel-Interaktionen
 
-| Aktion | Was passiert |
-|---|---|
-| Lektion „Pozdravi“ öffnen | Wortkarte **Hallo** 👋 (halo) = Zdravo, wird automatisch vorgelesen |
-| Auf „Dalje“ tippen | A/B-Frage: „Šta znači ‚Hallo‘? A) Zdravo B) Hvala“ |
-| Falsche Antwort tippen | Sanfte Korrektur „Skoro! 🙂“, richtige Antwort markiert, neuer Versuch |
-| Lektion abschließen | Sterne, Wortübersicht, nächste Lektion vorgeschlagen |
-| Chat: „Kako se kaže hvala?“ | KI antwortet mit **Danke** (danke) 🙏, Wort antippbar zum Anhören |
-| Chat: 🎤 „Šta da kažem kod lekara?“ | Spracheingabe auf Serbisch → einfache Sätze für den Arztbesuch |
-| Chat: „Ko je pobedio na utakmici?“ | Kurze Antwort, dann zurück zum Deutschlernen (Themen-Leitplanke) |
+| Aktion                              | Was passiert                                                           |
+| ----------------------------------- | ---------------------------------------------------------------------- |
+| Lektion „Pozdravi“ öffnen           | Wortkarte **Hallo** 👋 (halo) = Zdravo, wird automatisch vorgelesen    |
+| Auf „Dalje“ tippen                  | A/B-Frage: „Šta znači ‚Hallo‘? A) Zdravo B) Hvala“                     |
+| Falsche Antwort tippen              | Sanfte Korrektur „Skoro! 🙂“, richtige Antwort markiert, neuer Versuch |
+| Lektion abschließen                 | Sterne, Wortübersicht, nächste Lektion vorgeschlagen                   |
+| Chat: „Kako se kaže hvala?“         | KI antwortet mit **Danke** (danke) 🙏, Wort antippbar zum Anhören      |
+| Chat: 🎤 „Šta da kažem kod lekara?“ | Spracheingabe auf Serbisch → einfache Sätze für den Arztbesuch         |
+| Chat: „Ko je pobedio na utakmici?“  | Kurze Antwort, dann zurück zum Deutschlernen (Themen-Leitplanke)       |
 
 ## Projektstruktur
 
@@ -200,17 +200,17 @@ Bewusst nicht im ersten Wurf, aber als konkrete nächste Schritte durchdacht:
 
 ## Stolperfallen
 
-| Problem | Lösung |
-|---|---|
-| Hydration-Fehler durch `localStorage` | Erst in `useEffect` lesen |
-| Hydration-Fehler durch `Math.random()` | Zufall nur in Event-Handlern erzeugen |
-| `params.id` in Next 15+ | `const { id } = await params` |
-| Datum per `toISOString()` | Ist UTC → Serie bricht nachts ab. Lokales Datum selbst bauen |
-| Intervalle ohne Cleanup | `clearInterval` im `useEffect`-Return, sonst zählt Zeit doppelt |
-| Kaputte č, ć, š beim Streaming | `decoder.decode(value, { stream: true })` |
-| KI-Antworten als HTML rendern | Kein `dangerouslySetInnerHTML`, `**fett**` selbst parsen |
-| Sprachausgabe am Handy stumm | Nur über HTTPS zuverlässig → Vercel |
-| Modell plötzlich weg (404) | Groq-Deprecations beobachten, Modell nur über `LLM_MODEL` setzen |
+| Problem                                | Lösung                                                           |
+| -------------------------------------- | ---------------------------------------------------------------- |
+| Hydration-Fehler durch `localStorage`  | Erst in `useEffect` lesen                                        |
+| Hydration-Fehler durch `Math.random()` | Zufall nur in Event-Handlern erzeugen                            |
+| `params.id` in Next 15+                | `const { id } = await params`                                    |
+| Datum per `toISOString()`              | Ist UTC → Serie bricht nachts ab. Lokales Datum selbst bauen     |
+| Intervalle ohne Cleanup                | `clearInterval` im `useEffect`-Return, sonst zählt Zeit doppelt  |
+| Kaputte č, ć, š beim Streaming         | `decoder.decode(value, { stream: true })`                        |
+| KI-Antworten als HTML rendern          | Kein `dangerouslySetInnerHTML`, `**fett**` selbst parsen         |
+| Sprachausgabe am Handy stumm           | Nur über HTTPS zuverlässig → Vercel                              |
+| Modell plötzlich weg (404)             | Groq-Deprecations beobachten, Modell nur über `LLM_MODEL` setzen |
 
 ## Tech Stack
 
