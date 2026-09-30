@@ -174,7 +174,7 @@ KI-Lehrer das API-Kontingent verbrauchen. Deshalb:
 Jede Phase endet mit etwas, das **funktioniert und deployed ist**.
 Definition of Done: läuft am Handy, `lint` + `typecheck` + `test` grün, auf Vercel live.
 
-- [ ] **Phase 0: Setup:** `create-next-app`, Git, Prettier, Aufräumen, „Zdravo! 👋“ auf Vercel
+- [x] **Phase 0: Setup:** `create-next-app`, Git, Prettier, Aufräumen, „Zdravo! 👋“ auf Vercel
 - [ ] **Phase 1: Datenmodell:** Typen `Word`/`Lesson`, erste 3 Lektionen, Tests gegen Duplikate
 - [ ] **Phase 2: Wortkarte:** großes Wort, Emoji, Lautschrift, 🔊 Vorlesen
 - [ ] **Phase 3: A/B-Frage:** `shuffle` + `buildQuestion` mit Tests, Lob und Korrektur
