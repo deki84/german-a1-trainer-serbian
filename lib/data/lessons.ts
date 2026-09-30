@@ -56,3 +56,22 @@ export const LESSONS: Lesson[] = [
     ],
   },
 ];
+
+/**
+ * Findet eine Lektion anhand ihrer ID.
+ * Gibt undefined zurück, wenn es keine Lektion mit dieser ID gibt
+ * (z. B. bei einem Tippfehler in der URL).
+ */
+export function getLesson(id: string): Lesson | undefined {
+  return LESSONS.find((lesson) => lesson.id === id);
+}
+
+/**
+ * Liefert die Lektion, die nach der angegebenen kommt.
+ * Gibt undefined zurück bei der letzten Lektion oder einer unbekannten ID.
+ */
+export function getNextLesson(id: string): Lesson | undefined {
+  const index = LESSONS.findIndex((lesson) => lesson.id === id);
+  if (index === -1) return undefined;
+  return LESSONS[index + 1];
+}
