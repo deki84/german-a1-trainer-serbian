@@ -11,6 +11,10 @@ Wörtern und immer mit Aussprachehilfe antwortet.
 
 Für Nutzer heißt die App **„Nemački korak po korak“** („Deutsch Schritt für Schritt“).
 
+Gelernt wird in einem **täglichen Training von 15–30 Minuten**, das nach den Ergebnissen
+der Lernforschung aufgebaut ist: erst fällige Wörter wiederholen, dann wenige neue lernen,
+alles mit Abfragen statt bloßem Anschauen (siehe [Lernmethode](#lernmethode)).
+
 > **Status:** 🚧 Im Aufbau, wird von Grund auf neu entwickelt (siehe [Roadmap](#roadmap)).
 
 ## Warum dieses Projekt?
@@ -93,6 +97,67 @@ Die KI beantwortet nur **zusätzliche, offene Fragen** („Wie sage ich das beim
 - Themen: Deutsch und Alltag in Deutschland; bei Recht, Medizin, Geld nur
   einfache Hinweise plus Empfehlung, Fachleute zu fragen
 
+## Lernmethode
+
+Die App setzt die Lerntechniken um, die in der Forschung am besten belegt sind.
+Sie sind bewusst einfach gehalten, damit sie auch für Lernende mit geringer
+Lesekompetenz funktionieren.
+
+### Was die Forschung sagt
+
+| Befund                                                                                                                                                                                               | Quelle                                                                        | Umsetzung in der App                                                                        |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| **Abfragen schlägt Wiederlesen.** Sich aktiv erinnern (Retrieval Practice) und verteiltes Üben sind die zwei wirksamsten Lerntechniken, altersunabhängig und für viele Lernstoffe.                   | Dunlosky et al. (2013), _Psychological Science in the Public Interest_        | Jedes neue Wort wird sofort abgefragt, nicht nur gezeigt.                                   |
+| **Rückmeldung verstärkt das Abfragen.** Ohne Korrektur bringt Abfragen kaum Vorteile gegenüber Wiederlesen, mit Korrektur deutlich.                                                                  | Studien zu Retrieval Practice mit Feedback im Fremdsprachenlernen             | Nach jeder Antwort: Lob oder sanfte Korrektur mit der richtigen Antwort und Audio.          |
+| **Verteilen schlägt Pauken.** Wiederholungen mit Abstand führen beim Fremdsprachenlernen zu deutlich besserem Behalten als alles an einem Tag.                                                       | Kim & Webb (2022), Meta-Analyse, _Language Learning_; Cepeda et al. (2006)    | Tägliche kurze Einheiten statt langer Sitzungen, Wiederholung nach festen Abständen.        |
+| **Wachsende Abstände helfen leicht.** Immer größere Abstände zwischen Wiederholungen sind etwas besser als gleich bleibende. Der ideale Abstand wächst mit der Zeit, die man sich etwas merken will. | Nakata (2015), _Studies in Second Language Acquisition_; Cepeda et al. (2006) | Leitner-System mit Abständen von 1, 2, 4, 8, 16 und 32 Tagen.                               |
+| **Abstand wichtiger als Paketgröße.** Ob man in Päckchen von 4 oder 20 Wörtern lernt, macht wenig aus; die Abstände zwischen den Wiederholungen machen viel aus.                                     | Nakata & Webb (2016), _Studies in Second Language Acquisition_                | Kleine Lektionen (ca. 8 Wörter) zur Übersicht, entscheidend ist aber der Wiederholungsplan. |
+| **Wiedererkennen vor aktivem Erinnern.** Auswahlfragen sind der leichtere Einstieg; aktives Abrufen baut stärkeres, produktives Wissen auf.                                                          | Forschung zu Abfrageformaten beim Vokabellernen                               | Schwierigkeit steigt pro Wort: Bedeutung erkennen → Wort erkennen → nur hören → Lückentext. |
+| **Lückentexte allein sind schwach.** In einer Meta-Analyse zu Vokabelübungen zeigten Lückentexte nur kleine, unsichere Effekte, Karteikarten deutlich größere.                                       | Webb et al. (2020), Meta-Analyse, _The Modern Language Journal_               | Lückentext nur als späte Stufe für Wörter, die schon sitzen.                                |
+| **Bei geringer Lesekompetenz: erst mündlich.** Lesen und Schreiben bauen auf mündlichen Fähigkeiten auf; die Erstsprache zur Erklärung hilft.                                                        | LESLLA-Forschung (Literacy Education and Second Language Learning for Adults) | Audio bei jedem Wort, Emojis, Erklärungen auf Serbisch, eine Stufe „nur hören“.             |
+
+### Das tägliche Training (15–30 Minuten)
+
+```
+1. Wiederholen   (5–15 min)   Fällige Wörter aus allen Lektionen, gemischt
+                              ↓
+2. Neue Wörter   (5–10 min)   5–10 neue Wörter: Wortkarte → sofort abfragen
+                              → am Ende der Einheit noch einmal abfragen
+                              ↓
+3. Abschluss                  Sterne, 🔥 Serie, "Vidimo se sutra!"
+```
+
+- **Wiederholen kommt zuerst.** Wenn viele Wörter fällig sind, gibt es an diesem Tag
+  weniger neue. So wächst der Berg an Wiederholungen nie über den Kopf.
+- **Neue Wörter pro Tag** hängen vom Tagesziel ab: 15 min → 5 neue, 20 min → 7 neue,
+  30 min → 10 neue.
+- **Gemischt statt nach Lektion:** Beim Wiederholen kommen Wörter aus verschiedenen
+  Themen durcheinander. Das ist anstrengender, aber gerade deshalb wirksam.
+
+### Das Leitner-System
+
+Jedes Wort liegt in einer von sechs „Boxen“. Die Box bestimmt, wann es wiederkommt
+und wie es abgefragt wird:
+
+| Box | Wiederholung nach | Abfrage                                             |
+| --- | ----------------- | --------------------------------------------------- |
+| 1   | 1 Tag             | Wortkarte mit Bild und Audio → „Šta znači …?“ (A/B) |
+| 2   | 2 Tagen           | „Kako se kaže …?“ (Serbisch → Deutsch, A/B)         |
+| 3   | 4 Tagen           | Nur hören: Audio → Bedeutung wählen                 |
+| 4   | 8 Tagen           | Lückentext im Satz                                  |
+| 5   | 16 Tagen          | gemischt                                            |
+| 6   | 32 Tagen          | gemischt, danach gilt das Wort als gelernt ✅       |
+
+**Richtig** → eine Box weiter. **Falsch** → zurück in Box 1, mit sanfter Korrektur.
+
+### Ehrliche Grenzen
+
+- Die meisten Studien wurden mit Studierenden durchgeführt, die gut lesen können.
+  Zu Lernenden mit geringer Lesekompetenz gibt es deutlich weniger Forschung.
+- Die App trainiert **Wortschatz und Hörverstehen**. Für die Prüfung Start Deutsch 1
+  braucht es zusätzlich Sprechen, einfache Sätze und Formulare. Das Goethe-Institut
+  empfiehlt dafür selbst einen Sprachkurs. Die App ist eine Ergänzung, kein Ersatz.
+
 ## Setup
 
 ```bash
@@ -151,7 +216,8 @@ KI-Lehrer das API-Kontingent verbrauchen. Deshalb:
 ```
 ├── app/
 │   ├── layout.tsx              # Schrift, Metadaten, Viewport
-│   ├── page.tsx                # Startseite: Tagesziel, Chat-Knopf, Lektionen
+│   ├── page.tsx                # Startseite: 25 Rubriken zum Aufklappen, später Tagesziel und Chat
+│   ├── today/page.tsx          # Tägliches Training (Wiederholen + neue Wörter)
 │   ├── lesson/[id]/page.tsx    # Lektion (statisch generiert)
 │   ├── chat/page.tsx           # KI-Lehrer
 │   ├── api/chat/route.ts       # Orchestriert LLM-Aufruf + Streaming
@@ -160,11 +226,12 @@ KI-Lehrer das API-Kontingent verbrauchen. Deshalb:
 ├── hooks/                      # useProgress, useStudyTimer, useSpeechInput, …
 ├── lib/
 │   ├── quiz.ts                 # A/B-Fragen bauen, mischen, Sterne berechnen
+│   ├── srs.ts                  # Leitner-System: Boxen, Fälligkeit, Tagesplan
 │   ├── studyTime.ts            # Lernzeit, Serie, Schätzung bis A1
 │   ├── speech.ts               # Vorlesen (Web Speech API)
 │   ├── tutorPrompt.ts          # System-Prompt des KI-Lehrers
-│   └── types.ts                # Word, Lesson, Progress, ChatMessage
-├── data/                       # Wortschatz aus der Goethe-A1-Liste
+│   └── types.ts                # Word, Section, Lesson, …
+├── data/                       # Wortschatz: 794 Wörter, 99 Lektionen, 25 Rubriken
 ├── tests/                      # Vitest
 └── .env.example                # Zeigt benötigte Umgebungsvariablen
 ```
@@ -172,45 +239,51 @@ KI-Lehrer das API-Kontingent verbrauchen. Deshalb:
 ## Roadmap
 
 Jede Phase endet mit etwas, das **funktioniert und deployed ist**.
-Definition of Done: läuft am Handy, `lint` + `typecheck` + `test` grün, auf Vercel live.
+Definition of Done: läuft am Handy, responsive (375 / 768 / 1280 px), hell und dunkel,
+`lint` + `typecheck` + `test` grün, auf Vercel live.
 
 - [x] **Phase 0: Setup:** `create-next-app`, Git, Prettier, Aufräumen, „Zdravo! 👋“ auf Vercel
-- [x] **Phase 1: Datenmodell:** Typen `Word`/`Lesson`, erste 3 Lektionen, Tests gegen Duplikate
-- [ ] **Phase 2: Wortkarte:** großes Wort, Emoji, Lautschrift, 🔊 Vorlesen
-- [ ] **Phase 3: A/B-Frage:** `shuffle` + `buildQuestion` mit Tests, Lob und Korrektur
-- [ ] **Phase 4: Lektionsablauf:** `/lesson/[id]`, State Machine `learn → quiz → finish`
-- [ ] **Phase 5: Fortschritt:** `localStorage` ohne Hydration-Fehler, ✅ und ▶️ auf der Startseite
-- [ ] **Phase 6: Tagesziel:** aktive Lernzeit messen, Ring, 🔥 Serie, Schätzung bis A1
+- [x] **Phase 1: Datenmodell:** Typen, komplette Wortliste (794 Wörter, 25 Rubriken), Tests gegen Duplikate
+- [x] **Phase 2: Wortkarte:** Lektionsseite, Rubriken zum Aufklappen, großes Wort, Emoji, Lautschrift, 🔊 Vorlesen
+- [ ] **Phase 3: Abfragen:** `shuffle` + `buildQuestion` mit Tests; drei Fragetypen: Bedeutung erkennen, Wort erkennen, nur hören; Lob und Korrektur
+- [ ] **Phase 4: Lektionsablauf:** State Machine `learn → quiz → finish`, Fortschrittspunkte, Sterne
+- [ ] **Phase 5: Leitner-System:** `lib/srs.ts` mit Tests (Boxen, Fälligkeit), Speichern in `localStorage` ohne Hydration-Fehler
+- [ ] **Phase 6: Tägliches Training:** `/today` mit Wiederholen + neuen Wörtern, Tagesziel 15/20/30 min, 🔥 Serie
 - [ ] **Phase 7: KI-Lehrer:** Groq-Route mit Streaming, Chat-UI, antippbare Wörter, 🎤, Clerk
-- [ ] **Phase 8: Vollständig:** komplette Wortliste (~790 Wörter), PWA, Barrierefreiheits-Check, Test mit echtem Lernenden
+- [ ] **Phase 8: Lückentext & Feinschliff:** Beispielsätze, Lückentext als Box-4-Abfrage, PWA, Barrierefreiheits-Check, Test mit echtem Lernenden
 
 ## Nächste Ausbaustufen
 
 Bewusst nicht im ersten Wurf, aber als konkrete nächste Schritte durchdacht:
 
-- **Spaced Repetition (Leitner-System):** falsch beantwortete Wörter kommen
-  häufiger wieder, bekannte seltener. Größter Lerneffekt pro Minute
+- **Adaptiver Wiederholungsplan** (z. B. FSRS) statt fester Leitner-Abstände,
+  berechnet aus den echten Antworten des Lernenden
+- **Sprechen üben:** Wort nachsprechen, Spracherkennung prüft die Aussprache
 - **Spracheingabe über Groq Whisper** statt Browser-Spracherkennung, die auf
   iOS und Firefox unzuverlässig ist
 - **Accounts + Datenbank** (z. B. Supabase), damit Fortschritt geräteübergreifend
   gespeichert wird und mehrere Lernende möglich sind
 - **Umschalter Latinica ↔ Kyrillisch** für Lernende, die Kyrillisch gewohnt sind
-- **Beispielsätze** aus der Wortliste als zweite Übungsstufe
 - **Weitere Ausgangssprachen** (Türkisch, Arabisch, …), da nur die Datenschicht wechselt
 
 ## Stolperfallen
 
-| Problem                                | Lösung                                                           |
-| -------------------------------------- | ---------------------------------------------------------------- |
-| Hydration-Fehler durch `localStorage`  | Erst in `useEffect` lesen                                        |
-| Hydration-Fehler durch `Math.random()` | Zufall nur in Event-Handlern erzeugen                            |
-| `params.id` in Next 15+                | `const { id } = await params`                                    |
-| Datum per `toISOString()`              | Ist UTC → Serie bricht nachts ab. Lokales Datum selbst bauen     |
-| Intervalle ohne Cleanup                | `clearInterval` im `useEffect`-Return, sonst zählt Zeit doppelt  |
-| Kaputte č, ć, š beim Streaming         | `decoder.decode(value, { stream: true })`                        |
-| KI-Antworten als HTML rendern          | Kein `dangerouslySetInnerHTML`, `**fett**` selbst parsen         |
-| Sprachausgabe am Handy stumm           | Nur über HTTPS zuverlässig → Vercel                              |
-| Modell plötzlich weg (404)             | Groq-Deprecations beobachten, Modell nur über `LLM_MODEL` setzen |
+| Problem                                     | Lösung                                                                                                    |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Hydration-Fehler durch `localStorage`       | Erst in `useEffect` lesen                                                                                 |
+| Hydration-Fehler durch `Math.random()`      | Zufall nur in Event-Handlern erzeugen                                                                     |
+| `params.id` in Next 15+                     | `const { id } = await params`                                                                             |
+| Datum per `toISOString()`                   | Ist UTC → Serie bricht nachts ab. Lokales Datum selbst bauen                                              |
+| Intervalle ohne Cleanup                     | `clearInterval` im `useEffect`-Return, sonst zählt Zeit doppelt                                           |
+| Kaputte č, ć, š beim Streaming              | `decoder.decode(value, { stream: true })`                                                                 |
+| KI-Antworten als HTML rendern               | Kein `dangerouslySetInnerHTML`, `**fett**` selbst parsen                                                  |
+| Sprachausgabe am Handy stumm                | Nur über HTTPS zuverlässig → Vercel                                                                       |
+| Modell plötzlich weg (404)                  | Groq-Deprecations beobachten, Modell nur über `LLM_MODEL` setzen                                          |
+| Editor zeigt Fehler, `pnpm typecheck` nicht | VS-Code-Cache veraltet → „TypeScript: Restart TS Server“. Im Zweifel hat das Terminal recht               |
+| 🔊 bleibt nach dem ersten Vorlesen stumm    | Chrome-Fehler: Referenz auf die Ausgabe halten, vor `speak()` `cancel()` + `resume()` und kurz warten     |
+| Flaggen-Emojis wie 🇷🇸 zeigen nur „RS“       | Windows unterstützt keine Flaggen-Emojis → nicht für wichtige Informationen verwenden                     |
+| `<summary>` zeigt doppelte Pfeile           | Browser-Marker ausblenden: `list-none` und `[&::-webkit-details-marker]:hidden` (Safari)                  |
+| `Cannot find module '@/…'`                  | Datei liegt im falschen Ordner (VS Code fasst Ordner zu `a\b` zusammen) → Pfad mit `Get-ChildItem` prüfen |
 
 ## Tech Stack
 
