@@ -1,4 +1,3 @@
-
 export type Word = {
   /** Deutsches Wort, Nomen immer mit Artikel, z. B. "das Wasser" */
   de: string;
