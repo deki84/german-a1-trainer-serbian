@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="sr">
-      <body className={`${atkinson.className} antialiased`}>{children}</body>
+      <body className={`${atkinson.className} bg-bg text-ink antialiased`}>{children}</body>
     </html>
   );
 }

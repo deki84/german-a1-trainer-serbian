@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LESSONS } from "@/data/lessons";
 
 /**
@@ -12,9 +13,7 @@ export default function HomePage() {
           👋
         </span>
         <h1 className="mt-4 text-4xl font-bold md:text-5xl">Zdravo!</h1>
-        <p className="mt-2 text-lg text-slate-600 md:text-xl">
-          Zajedno učimo nemački. Korak po korak.
-        </p>
+        <p className="text-muted mt-2 text-lg md:text-xl">Zajedno učimo nemački. Korak po korak.</p>
       </header>
 
       <section className="mt-10" aria-labelledby="lessons-heading">
@@ -24,19 +23,21 @@ export default function HomePage() {
 
         <ul className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {LESSONS.map((lesson) => (
-            <li
-              key={lesson.id}
-              className="flex items-center gap-4 rounded-2xl border-2 border-slate-200 bg-white p-4"
-            >
-              <span className="text-4xl" aria-hidden="true">
-                {lesson.emoji}
-              </span>
-              <div>
-                <p className="text-lg font-bold">{lesson.title}</p>
-                <p className="text-slate-600">
-                  {lesson.subtitle} · {lesson.words.length} reči
-                </p>
-              </div>
+            <li key={lesson.id}>
+              <Link
+                href={`/lesson/${lesson.id}`}
+                className="border-line bg-surface hover:border-river flex items-center gap-4 rounded-2xl border-2 p-4 transition-colors"
+              >
+                <span className="text-4xl" aria-hidden="true">
+                  {lesson.emoji}
+                </span>
+                <div>
+                  <p className="text-lg font-bold">{lesson.title}</p>
+                  <p className="text-muted">
+                    {lesson.subtitle} · {lesson.words.length} reči
+                  </p>
+                </div>
+              </Link>
             </li>
           ))}
         </ul>
