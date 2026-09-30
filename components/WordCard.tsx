@@ -1,5 +1,5 @@
 import type { Word } from "@/lib/types";
-import { ListenButton} from "@/components/ListenButton";
+import { ListenButton } from "@/components/ListenButton";
 
 type WordCardProps = {
   word: Word;
@@ -27,7 +27,7 @@ export function WordCard({ word }: WordCardProps) {
       <p lang="sr" className="border-line mt-5 border-t-2 border-dashed pt-5 text-2xl md:text-3xl">
         {word.sr}
       </p>
-       <ListenButton text={word.de} />
+      <ListenButton text={word.de} />
     </article>
   );
 }

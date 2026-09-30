@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { LESSONS, getLesson, getNextLesson } from "@/data/lessons";
+import { LESSONS, SECTIONS, getLesson, getLessonsBySection, getNextLesson } from "@/data/lessons";
 
 describe("getLesson", () => {
   it("findet eine vorhandene Lektion", () => {
@@ -13,7 +13,7 @@ describe("getLesson", () => {
 
 describe("getNextLesson", () => {
   it("liefert die folgende Lektion", () => {
-    expect(getNextLesson("pozdravi")?.id).toBe("brojevi");
+    expect(getNextLesson("pozdravi")?.id).toBe(LESSONS[1].id);
   });
 
   it("gibt undefined bei der letzten Lektion zurück", () => {
@@ -23,6 +23,21 @@ describe("getNextLesson", () => {
 
   it("gibt undefined bei unbekannter ID zurück (nicht die erste Lektion!)", () => {
     expect(getNextLesson("gibt-es-nicht")).toBeUndefined();
+  });
+});
+
+describe("Rubriken", () => {
+  it("jede Lektion gehört zu einer vorhandenen Rubrik", () => {
+    const sectionIds = new Set(SECTIONS.map((section) => section.id));
+    for (const lesson of LESSONS) {
+      expect(sectionIds.has(lesson.section)).toBe(true);
+    }
+  });
+
+  it("jede Rubrik hat mindestens eine Lektion", () => {
+    for (const section of SECTIONS) {
+      expect(getLessonsBySection(section.id).length).toBeGreaterThan(0);
+    }
   });
 });
 
