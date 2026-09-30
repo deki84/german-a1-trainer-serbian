@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { WordCard } from "@/components/WordCard";
+import { LessonPlayer } from "@/components/LessonPlayer";
 import { LESSONS, getLesson } from "@/data/lessons";
 
 /**
@@ -41,9 +41,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
       </h1>
       <p className="text-muted mt-1">{lesson.subtitle}</p>
 
-      <section className="mt-8">
-        <WordCard word={firstWord} />
-      </section>
+      <LessonPlayer lesson={lesson} nextLesson={getLesson(lesson.id)} />
     </main>
   );
 }

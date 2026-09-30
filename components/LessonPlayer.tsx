@@ -1,0 +1,121 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { WordCard } from "@/components/WordCard";
+import { speakGerman } from "@/lib/speech";
+import type { Lesson } from "@/lib/types";
+
+type LessonPlayerProps = {
+  lesson: Lesson;
+  /** Die folgende Lektion, fehlt bei der letzten */
+  nextLesson?: Lesson;
+};
+
+/**
+ * Führt Wort für Wort durch eine Lektion.
+ * Client Component, weil sie sich merkt, bei welchem Wort man ist (useState).
+ */
+export function LessonPlayer({ lesson, nextLesson }: LessonPlayerProps) {
+  const [index, setIndex] = useState(0);
+  const [finished, setFinished] = useState(false);
+
+  const total = lesson.words.length;
+  const word = lesson.words[index];
+  const isLast = index === total - 1;
+
+  // Jedes neue Wort automatisch vorlesen
+  useEffect(() => {
+    if (!finished) speakGerman(word.de);
+  }, [word.de, finished]);
+
+  function handleNext() {
+    if (isLast) {
+      setFinished(true);
+    } else {
+      setIndex(index + 1);
+    }
+  }
+
+  function handleRestart() {
+    setIndex(0);
+    setFinished(false);
+  }
+
+  if (finished) {
+    return (
+      <section className="mt-8 text-center">
+        <div className="text-7xl" aria-hidden="true">
+          🎉
+        </div>
+        <h2 className="mt-4 text-3xl font-bold md:text-4xl">Bravo!</h2>
+        <p className="text-muted mt-2 text-lg">Naučio si {total} novih reči.</p>
+
+        <ul className="mt-6 flex flex-wrap justify-center gap-2">
+          {lesson.words.map((w) => (
+            <li
+              key={w.de}
+              lang="de"
+              className="border-line bg-surface rounded-full border-2 px-3 py-1"
+            >
+              <span aria-hidden="true">{w.emoji}</span> {w.de}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-8 space-y-3">
+          {nextLesson && (
+            <Link
+              href={`/lesson/${nextLesson.id}`}
+              className="bg-river text-bg flex min-h-16 items-center justify-center rounded-2xl px-4 text-xl font-bold"
+            >
+              Sledeća lekcija: {nextLesson.title} ➜
+            </Link>
+          )}
+          <button
+            type="button"
+            onClick={handleRestart}
+            className="border-line bg-surface flex min-h-14 w-full cursor-pointer items-center justify-center rounded-2xl border-2 text-lg font-bold"
+          >
+            Ponovi lekciju 🔁
+          </button>
+          <Link
+            href="/"
+            className="border-line bg-surface flex min-h-14 items-center justify-center rounded-2xl border-2 text-lg font-bold"
+          >
+            Sve teme 🏠
+          </Link>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="mt-6">
+      {/* Fortschritt: grün = geschafft, blau = jetzt, grau = kommt noch */}
+      <div className="flex flex-wrap gap-2" aria-label={`Reč ${index + 1} od ${total}`}>
+        {lesson.words.map((w, i) => (
+          <span
+            key={w.de}
+            className={`h-3 w-3 rounded-full ${
+              i < index ? "bg-river" : i === index ? "bg-river scale-125" : "bg-line"
+            }`}
+          />
+        ))}
+      </div>
+
+      <div className="mt-6">
+        {/* key sorgt dafür, dass die Karte bei jedem Wort neu erscheint */}
+        <WordCard key={word.de} word={word} />
+      </div>
+
+      <button
+        type="button"
+        onClick={handleNext}
+        className="bg-river text-bg mt-6 flex min-h-16 w-full cursor-pointer items-center justify-center rounded-2xl text-xl font-bold"
+      >
+        {isLast ? "Završi 🎉" : "Dalje ➜"}
+      </button>
+    </section>
+  );
+}
