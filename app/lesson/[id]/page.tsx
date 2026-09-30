@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LessonPlayer } from "@/components/LessonPlayer";
-import { LESSONS, getLesson } from "@/data/lessons";
+import { LESSONS, getLesson, getNextLesson } from "@/data/lessons";
 
 /**
  * In Next.js 15+ ist params ein Promise und muss mit await gelesen werden.
@@ -25,7 +25,6 @@ export default async function LessonPage({ params }: LessonPageProps) {
   // Unbekannte ID in der URL → 404-Seite statt Absturz
   if (!lesson) notFound();
 
-  const firstWord = lesson.words[0];
 
   return (
     <main className="mx-auto min-h-dvh max-w-md px-6 py-6 md:max-w-2xl">
@@ -41,7 +40,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
       </h1>
       <p className="text-muted mt-1">{lesson.subtitle}</p>
 
-      <LessonPlayer lesson={lesson} nextLesson={getLesson(lesson.id)} />
+      <LessonPlayer key={lesson.id} lesson={lesson} nextLesson={getNextLesson(lesson.id)} />
     </main>
   );
 }
