@@ -28,7 +28,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
   return (
     <main className="mx-auto min-h-dvh max-w-md px-6 py-6 md:max-w-2xl">
       <Link
-        href="/"
+        href="/lessons"
         className="border-line inline-flex h-12 items-center gap-2 rounded-full border-2 px-4 font-bold"
       >
         <span aria-hidden="true">⬅</span> Nazad

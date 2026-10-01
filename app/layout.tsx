@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible } from "next/font/google";
 import "./globals.css";
+import { TabBar } from "@/components/TabBar";
 
 /**
  * Atkinson Hyperlegible wurde für gute Lesbarkeit entwickelt.
@@ -27,7 +28,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="sr">
-      <body className={`${atkinson.className} bg-bg text-ink antialiased`}>{children}</body>
+      <body className={`${atkinson.className} bg-bg text-ink antialiased`}>{children}
+         <TabBar />
+   
+      </body>
     </html>
   );
 }
