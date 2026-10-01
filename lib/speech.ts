@@ -1,21 +1,11 @@
-/**
- * Liest einen deutschen Text laut vor (Web Speech API).
- * Läuft komplett im Browser, keine Kosten, kein API-Key.
- *
- * Nur im Browser aufrufen, z. B. in einem onClick-Handler.
- */
-
-/** Die gefundene deutsche Stimme wird zwischengespeichert. */
 let germanVoice: SpeechSynthesisVoice | null = null;
+let pendingTimeout: number | undefined;
 
-/**
- * Die aktuell laufende Ausgabe.
- * Chrome-Fehler: Ohne eine Referenz räumt der Browser das Objekt vorzeitig weg.
- * Dann gilt die Ausgabe intern als "läuft noch", und jedes weitere speak() bleibt stumm.
- */
+// Chrome-Fehler: Ohne Referenz räumt der Browser die Ausgabe zu früh weg,
+// danach bleibt jedes weitere speak() stumm.
 let currentUtterance: SpeechSynthesisUtterance | null = null;
 
-/** Sucht eine deutsche Stimme, lokale (auf dem Gerät installierte) zuerst. */
+// Lokale Stimmen zuerst: zuverlässiger als Online-Stimmen
 function findGermanVoice(): SpeechSynthesisVoice | null {
   const voices = window.speechSynthesis
     .getVoices()
@@ -23,7 +13,7 @@ function findGermanVoice(): SpeechSynthesisVoice | null {
   return voices.find((voice) => voice.localService) ?? voices[0] ?? null;
 }
 
-// Chrome lädt die Stimmen erst nach und nach. Sobald sie da sind, merken wir uns die deutsche.
+// Chrome lädt die Stimmen erst nach und nach
 if (typeof window !== "undefined" && "speechSynthesis" in window) {
   window.speechSynthesis.addEventListener("voiceschanged", () => {
     germanVoice = findGermanVoice();
@@ -31,7 +21,6 @@ if (typeof window !== "undefined" && "speechSynthesis" in window) {
 }
 
 export function speakGerman(text: string, rate = 0.65): void {
-  // Schutz: auf dem Server oder in alten Browsern gibt es keine Sprachausgabe
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
 
   const synth = window.speechSynthesis;
@@ -39,20 +28,19 @@ export function speakGerman(text: string, rate = 0.65): void {
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "de-DE";
-  utterance.rate = rate; // 1 = normal, 0.65 = deutlich langsamer für Anfänger
+  utterance.rate = rate;
   if (germanVoice) utterance.voice = germanVoice;
 
-  // Referenz halten, bis die Ausgabe fertig ist (siehe Kommentar oben)
   currentUtterance = utterance;
   utterance.onend = () => {
     if (currentUtterance === utterance) currentUtterance = null;
   };
 
-  // Immer sauber zurücksetzen: laufende Ausgabe stoppen und einen
-  // "hängenden" Pause-Zustand aufheben, in dem Chrome manchmal festsitzt.
+  // Noch wartenden Aufruf abbrechen, sonst sprechen beide
+  window.clearTimeout(pendingTimeout);
   synth.cancel();
-  synth.resume();
+  synth.resume(); // Chrome hängt manchmal im Pause-Zustand
 
-  // Chrome-Fehler: speak() direkt nach cancel() wird manchmal verschluckt → kurz warten
-  window.setTimeout(() => synth.speak(utterance), 60);
+  // Chrome-Fehler: speak() direkt nach cancel() wird manchmal verschluckt
+  pendingTimeout = window.setTimeout(() => synth.speak(utterance), 60);
 }

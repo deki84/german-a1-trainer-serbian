@@ -42,3 +42,11 @@ export function buildQuestion(
 
   return { mode, word, options: [first as AnswerOption, second as AnswerOption] };
 }
+
+// Sterne nach Anteil der beim ersten Versuch richtigen Antworten
+export function calculateStars(firstTryCorrect: number, total: number): 1 | 2 | 3 {
+  const ratio = total === 0 ? 0 : firstTryCorrect / total;
+  if (ratio >= 0.9) return 3;
+  if (ratio >= 0.6) return 2;
+  return 1;
+}

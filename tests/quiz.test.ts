@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { LESSONS } from "@/data/lessons";
-import { PRAISE, buildQuestion, pickPraise, shuffle } from "@/lib/quiz";
+import { PRAISE, buildQuestion, calculateStars, pickPraise, shuffle } from "@/lib/quiz";
 import type { QuestionMode, Word } from "@/lib/types";
 
 /** "Zufall", der immer denselben Wert liefert. Macht Tests vorhersagbar. */
@@ -103,5 +103,25 @@ describe("echte Daten", () => {
         }
       }
     }
+  });
+});
+describe("calculateStars", () => {
+  it("3 Sterne ab 90 % beim ersten Versuch", () => {
+    expect(calculateStars(9, 10)).toBe(3);
+    expect(calculateStars(8, 8)).toBe(3);
+  });
+
+  it("2 Sterne ab 60 %", () => {
+    expect(calculateStars(6, 10)).toBe(2);
+    expect(calculateStars(8, 10)).toBe(2);
+  });
+
+  it("1 Stern darunter, nie 0", () => {
+    expect(calculateStars(5, 10)).toBe(1);
+    expect(calculateStars(0, 10)).toBe(1);
+  });
+
+  it("stürzt bei 0 Wörtern nicht ab", () => {
+    expect(calculateStars(0, 0)).toBe(1);
   });
 });

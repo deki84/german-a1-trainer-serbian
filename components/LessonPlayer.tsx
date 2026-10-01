@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { QuestionCard } from "@/components/QuestionCard";
 import { WordCard } from "@/components/WordCard";
-import { buildQuestion } from "@/lib/quiz";
+import { buildQuestion, calculateStars } from "@/lib/quiz";
 import { speakGerman } from "@/lib/speech";
 import type { Lesson, Question, QuestionMode } from "@/lib/types";
 
@@ -22,6 +22,8 @@ export function LessonPlayer({ lesson, nextLesson }: LessonPlayerProps) {
   const [phase, setPhase] = useState<Phase>("learn");
   const [question, setQuestion] = useState<Question | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const [hadMistake, setHadMistake] = useState(false);
+  const [firstTryCorrect, setFirstTryCorrect] = useState(0);
 
   const total = lesson.words.length;
   const word = lesson.words[index] ?? lesson.words[0];
@@ -42,7 +44,15 @@ export function LessonPlayer({ lesson, nextLesson }: LessonPlayerProps) {
     setPhase("quiz");
   }
 
+  function handleRetry() {
+    setHadMistake(true);
+    startQuiz();
+  }
+
   function handleCorrect() {
+    if (!hadMistake) setFirstTryCorrect((count) => count + 1);
+    setHadMistake(false);
+
     if (isLast) {
       setPhase("finish");
     } else {
@@ -54,17 +64,25 @@ export function LessonPlayer({ lesson, nextLesson }: LessonPlayerProps) {
   function handleRestart() {
     setIndex(0);
     setQuestion(null);
+    setHadMistake(false);
+    setFirstTryCorrect(0);
     setPhase("learn");
   }
 
   if (phase === "finish") {
+    const stars = calculateStars(firstTryCorrect, total);
+
     return (
       <section className="mt-8 text-center">
-        <div className="text-7xl" aria-hidden="true">
-          🎉
+        <div className="text-6xl tracking-widest" role="img" aria-label={`${stars} od 3 zvezdice`}>
+          {"⭐".repeat(stars)}
         </div>
-        <h2 className="mt-4 text-3xl font-bold md:text-4xl">Bravo!</h2>
-        <p className="text-muted mt-2 text-lg">Naučio si {total} novih reči.</p>
+        <h2 className="mt-4 text-3xl font-bold md:text-4xl">Bravo! 🎉</h2>
+        <p className="text-muted mt-2 text-lg">
+          Naučio si {total} novih reči.
+          <br />
+          Iz prvog pokušaja: {firstTryCorrect} od {total}.
+        </p>
 
         <ul className="mt-6 flex flex-wrap justify-center gap-2">
           {lesson.words.map((w) => (
@@ -137,7 +155,7 @@ export function LessonPlayer({ lesson, nextLesson }: LessonPlayerProps) {
             key={attempt}
             question={question}
             onCorrect={handleCorrect}
-            onRetry={startQuiz}
+            onRetry={handleRetry}
           />
         )}
       </div>
