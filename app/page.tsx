@@ -2,7 +2,7 @@ import Link from "next/link";
 import { LESSONS, SECTIONS, TOTAL_WORDS, getLessonsBySection } from "@/data/lessons";
 import { ContinueButton, type LessonSummary } from "@/components/ContinueButton";
 import { LessonBadge } from "@/components/LessonBadge";
-import { SoundToggle } from "@/components/SoundToggle";
+
 
 const summaries: LessonSummary[] = LESSONS.map((lesson) => ({
   id: lesson.id,
@@ -29,9 +29,8 @@ export default function HomePage() {
         <p className="text-muted mt-1">
           {LESSONS.length} lekcija · {TOTAL_WORDS} reči
         </p>
-        <div className="mt-4">
-  <SoundToggle />
-</div>
+       
+
       </header>
 
       <ContinueButton lessons={summaries} />
