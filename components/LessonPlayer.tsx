@@ -2,47 +2,62 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { QuestionCard } from "@/components/QuestionCard";
 import { WordCard } from "@/components/WordCard";
+import { buildQuestion } from "@/lib/quiz";
 import { speakGerman } from "@/lib/speech";
-import type { Lesson } from "@/lib/types";
+import type { Lesson, Question, QuestionMode } from "@/lib/types";
 
 type LessonPlayerProps = {
   lesson: Lesson;
-  /** Die folgende Lektion, fehlt bei der letzten */
   nextLesson?: Lesson;
 };
 
-/**
- * Führt Wort für Wort durch eine Lektion.
- * Client Component, weil sie sich merkt, bei welchem Wort man ist (useState).
- */
+type Phase = "learn" | "quiz" | "finish";
+
+const MODES: QuestionMode[] = ["meaning", "translate", "listen"];
+
 export function LessonPlayer({ lesson, nextLesson }: LessonPlayerProps) {
   const [index, setIndex] = useState(0);
-  const [finished, setFinished] = useState(false);
+  const [phase, setPhase] = useState<Phase>("learn");
+  const [question, setQuestion] = useState<Question | null>(null);
+  const [attempt, setAttempt] = useState(0);
 
   const total = lesson.words.length;
-  const word = lesson.words[index];
+  const word = lesson.words[index] ?? lesson.words[0];
   const isLast = index === total - 1;
 
-  // Jedes neue Wort automatisch vorlesen
   useEffect(() => {
-    if (!finished) speakGerman(word.de);
-  }, [word.de, finished]);
+    if (phase === "learn" && word) speakGerman(word.de);
+  }, [phase, word]);
 
-  function handleNext() {
+  if (!word) return null;
+
+  // Frage erst beim Klick bauen: Zufall während des Renderns führt zu Hydration-Fehlern
+  function startQuiz() {
+    if (!word) return;
+    const mode = MODES[index % MODES.length] ?? "meaning";
+    setQuestion(buildQuestion(word, lesson.words, mode));
+    setAttempt((count) => count + 1);
+    setPhase("quiz");
+  }
+
+  function handleCorrect() {
     if (isLast) {
-      setFinished(true);
+      setPhase("finish");
     } else {
       setIndex(index + 1);
+      setPhase("learn");
     }
   }
 
   function handleRestart() {
     setIndex(0);
-    setFinished(false);
+    setQuestion(null);
+    setPhase("learn");
   }
 
-  if (finished) {
+  if (phase === "finish") {
     return (
       <section className="mt-8 text-center">
         <div className="text-7xl" aria-hidden="true">
@@ -92,30 +107,40 @@ export function LessonPlayer({ lesson, nextLesson }: LessonPlayerProps) {
 
   return (
     <section className="mt-6">
-      {/* Fortschritt: grün = geschafft, blau = jetzt, grau = kommt noch */}
       <div className="flex flex-wrap gap-2" aria-label={`Reč ${index + 1} od ${total}`}>
         {lesson.words.map((w, i) => (
           <span
             key={w.de}
             className={`h-3 w-3 rounded-full ${
-              i < index ? "bg-river" : i === index ? "bg-river scale-125" : "bg-line"
+              i < index ? "bg-good" : i === index ? "bg-river scale-125" : "bg-line"
             }`}
           />
         ))}
       </div>
 
       <div className="mt-6">
-        {/* key sorgt dafür, dass die Karte bei jedem Wort neu erscheint */}
-        <WordCard key={word.de} word={word} />
-      </div>
+        {phase === "learn" && (
+          <>
+            <WordCard key={word.de} word={word} />
+            <button
+              type="button"
+              onClick={startQuiz}
+              className="bg-river text-bg mt-6 flex min-h-16 w-full cursor-pointer items-center justify-center rounded-2xl text-xl font-bold"
+            >
+              Dalje ➜
+            </button>
+          </>
+        )}
 
-      <button
-        type="button"
-        onClick={handleNext}
-        className="bg-river text-bg mt-6 flex min-h-16 w-full cursor-pointer items-center justify-center rounded-2xl text-xl font-bold"
-      >
-        {isLast ? "Završi 🎉" : "Dalje ➜"}
-      </button>
+        {phase === "quiz" && question && (
+          <QuestionCard
+            key={attempt}
+            question={question}
+            onCorrect={handleCorrect}
+            onRetry={startQuiz}
+          />
+        )}
+      </div>
     </section>
   );
 }
