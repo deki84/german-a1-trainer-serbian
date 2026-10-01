@@ -11,6 +11,12 @@
   --muted: #5a6b74; /* Nebentext */
   --river: #0e4d64; /* Hauptfarbe (Donau-Blau) */
   --river-soft: #dcebef; /* helle Variante für Flächen */
+  --mustard: #e4a93a; /* Antwort B */
+  --mustard-soft: #fbefd6;
+  --good: #2a8a55; /* richtig */
+  --good-soft: #ddf2e5;
+  --gentle: #8a4f7d; /* falsch: sanft statt Alarm-Rot */
+  --gentle-soft: #f2e4ef;
   --line: #dde3e0; /* Rahmen und Trennlinien */
 }
 
@@ -22,6 +28,12 @@
     --muted: #9db0b8;
     --river: #5fb3cc;
     --river-soft: #1b3a46;
+    --mustard: #f0bd5a;
+    --mustard-soft: #3a2f1a;
+    --good: #5ccb8c;
+    --good-soft: #193a28;
+    --gentle: #d59bc8;
+    --gentle-soft: #3a2436;
     --line: #26363f;
   }
 }
@@ -34,5 +46,11 @@
   --color-muted: var(--muted);
   --color-river: var(--river);
   --color-river-soft: var(--river-soft);
+  --color-mustard: var(--mustard);
+  --color-mustard-soft: var(--mustard-soft);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-gentle: var(--gentle);
+  --color-gentle-soft: var(--gentle-soft);
   --color-line: var(--line);
 }
