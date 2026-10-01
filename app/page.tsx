@@ -1,5 +1,15 @@
 import Link from "next/link";
 import { LESSONS, SECTIONS, TOTAL_WORDS, getLessonsBySection } from "@/data/lessons";
+import { ContinueButton, type LessonSummary } from "@/components/ContinueButton";
+import { LessonBadge } from "@/components/LessonBadge";
+import { SoundToggle } from "@/components/SoundToggle";
+
+const summaries: LessonSummary[] = LESSONS.map((lesson) => ({
+  id: lesson.id,
+  title: lesson.title,
+  emoji: lesson.emoji,
+  words: lesson.words.map((word) => word.de),
+}));
 
 /**
  * Startseite (Server Component).
@@ -19,7 +29,12 @@ export default function HomePage() {
         <p className="text-muted mt-1">
           {LESSONS.length} lekcija · {TOTAL_WORDS} reči
         </p>
+        <div className="mt-4">
+  <SoundToggle />
+</div>
       </header>
+
+      <ContinueButton lessons={summaries} />
 
       {SECTIONS.map((section) => (
         <section key={section.id} className="mt-10" aria-labelledby={`section-${section.id}`}>
@@ -27,7 +42,7 @@ export default function HomePage() {
             <span aria-hidden="true">{section.emoji}</span> {section.title}
           </h2>
 
-          <ul className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
             {getLessonsBySection(section.id).map((lesson) => (
               <li key={lesson.id}>
                 <Link
@@ -43,6 +58,7 @@ export default function HomePage() {
                       {lesson.subtitle} · {lesson.words.length} reči
                     </p>
                   </div>
+                  <LessonBadge words={lesson.words.map((word) => word.de)} />
                 </Link>
               </li>
             ))}

@@ -26,7 +26,11 @@ export function addDays(key: string, days: number): string {
 }
 
 // Richtig: eine Box weiter. Falsch: zurück in Box 1.
-export function reviewCard(card: CardState | undefined, correct: boolean, today: string): CardState {
+export function reviewCard(
+  card: CardState | undefined,
+  correct: boolean,
+  today: string,
+): CardState {
   const box = correct ? Math.min((card?.box ?? 0) + 1, MAX_BOX) : 1;
   return { box, due: addDays(today, INTERVALS[box - 1] ?? 1) };
 }

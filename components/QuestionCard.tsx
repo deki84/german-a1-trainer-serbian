@@ -5,6 +5,7 @@ import { ListenButton } from "@/components/ListenButton";
 import { pickPraise } from "@/lib/quiz";
 import { speakGerman } from "@/lib/speech";
 import type { Question } from "@/lib/types";
+import { getAutoplay } from "@/lib/settings";
 
 type QuestionCardProps = {
   question: Question;
@@ -29,7 +30,7 @@ export function QuestionCard({ question, onCorrect, onRetry }: QuestionCardProps
   const isCorrect = answered && options[selected]?.correct === true;
 
   useEffect(() => {
-    if (mode === "listen") speakGerman(word.de);
+    if (mode === "listen" && getAutoplay()) speakGerman(word.de);
   }, [mode, word.de]);
 
   function handleSelect(index: number) {

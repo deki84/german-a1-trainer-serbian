@@ -7,6 +7,8 @@ import { WordCard } from "@/components/WordCard";
 import { buildQuestion, calculateStars } from "@/lib/quiz";
 import { speakGerman } from "@/lib/speech";
 import type { Lesson, Question, QuestionMode } from "@/lib/types";
+import { saveAnswer } from "@/lib/srsStorage";
+import { getAutoplay } from "@/lib/settings";
 
 type LessonPlayerProps = {
   lesson: Lesson;
@@ -30,7 +32,7 @@ export function LessonPlayer({ lesson, nextLesson }: LessonPlayerProps) {
   const isLast = index === total - 1;
 
   useEffect(() => {
-    if (phase === "learn" && word) speakGerman(word.de);
+    if (phase === "learn" && word && getAutoplay()) speakGerman(word.de);
   }, [phase, word]);
 
   if (!word) return null;
@@ -50,6 +52,8 @@ export function LessonPlayer({ lesson, nextLesson }: LessonPlayerProps) {
   }
 
   function handleCorrect() {
+    // Gespeichert wird, ob das Wort beim ERSTEN Versuch richtig war
+    if (word) saveAnswer(word.de, !hadMistake);
     if (!hadMistake) setFirstTryCorrect((count) => count + 1);
     setHadMistake(false);
 
