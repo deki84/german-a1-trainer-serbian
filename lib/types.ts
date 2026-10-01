@@ -37,3 +37,17 @@ export type Lesson = {
   emoji: string;
   words: Word[];
 };
+
+export type QuestionMode = "meaning" | "translate" | "listen";
+
+export type AnswerOption = {
+  text: string;
+  lang: "de" | "sr";
+  correct: boolean;
+};
+
+export type Question = {
+  mode: QuestionMode;
+  word: Word;
+  options: [AnswerOption, AnswerOption];
+};

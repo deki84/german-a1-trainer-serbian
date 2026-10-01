@@ -25,7 +25,6 @@ export default async function LessonPage({ params }: LessonPageProps) {
   // Unbekannte ID in der URL → 404-Seite statt Absturz
   if (!lesson) notFound();
 
-
   return (
     <main className="mx-auto min-h-dvh max-w-md px-6 py-6 md:max-w-2xl">
       <Link
