@@ -9,7 +9,6 @@ import { speakGerman } from "@/lib/speech";
 import type { Lesson, Question, QuestionMode } from "@/lib/types";
 import { saveAnswer } from "@/lib/srsStorage";
 
-
 type LessonPlayerProps = {
   lesson: Lesson;
   nextLesson?: Lesson;

@@ -1,15 +1,9 @@
 import Link from "next/link";
 import { LESSONS, SECTIONS, TOTAL_WORDS, getLessonsBySection } from "@/data/lessons";
-import { ContinueButton, type LessonSummary } from "@/components/ContinueButton";
+import { TodayButton } from "@/components/TodayButton";
 import { LessonBadge } from "@/components/LessonBadge";
-
-
-const summaries: LessonSummary[] = LESSONS.map((lesson) => ({
-  id: lesson.id,
-  title: lesson.title,
-  emoji: lesson.emoji,
-  words: lesson.words.map((word) => word.de),
-}));
+import { ProgressCard } from "@/components/ProgressCard";
+const allWords = LESSONS.flatMap((lesson) => lesson.words.map((word) => word.de));
 
 /**
  * Startseite (Server Component).
@@ -29,11 +23,10 @@ export default function HomePage() {
         <p className="text-muted mt-1">
           {LESSONS.length} lekcija · {TOTAL_WORDS} reči
         </p>
-       
-
       </header>
 
-      <ContinueButton lessons={summaries} />
+      <TodayButton allWords={allWords} />
+      <ProgressCard allWords={allWords} />
 
       {SECTIONS.map((section) => (
         <section key={section.id} className="mt-10" aria-labelledby={`section-${section.id}`}>

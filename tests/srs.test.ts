@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
+  KNOWN_FROM_BOX,
   MAX_BOX,
   addDays,
+  countProgress,
   dateKey,
   getDueWords,
   isDue,
@@ -95,5 +97,27 @@ describe("isLearned und modeForBox", () => {
     expect(modeForBox(2)).toBe("translate");
     expect(modeForBox(3)).toBe("listen");
     expect(modeForBox(6)).toBe("listen");
+  });
+});
+
+describe("countProgress", () => {
+  const words = ["Hallo", "danke", "bitte", "ja"];
+
+  it("ohne Training ist alles 0", () => {
+    expect(countProgress({}, words)).toEqual({ practiced: 0, known: 0, total: 4 });
+  });
+
+  it("zählt geübte Wörter und gelernte ab Box 3", () => {
+    const state = {
+      Hallo: { box: 1, due: today },
+      danke: { box: KNOWN_FROM_BOX, due: today },
+      bitte: { box: MAX_BOX, due: today },
+    };
+    expect(countProgress(state, words)).toEqual({ practiced: 3, known: 2, total: 4 });
+  });
+
+  it("ignoriert gespeicherte Wörter, die es nicht mehr gibt", () => {
+    const state = { "gibt es nicht": { box: 5, due: today } };
+    expect(countProgress(state, words)).toEqual({ practiced: 0, known: 0, total: 4 });
   });
 });

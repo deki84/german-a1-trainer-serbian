@@ -56,3 +56,18 @@ export function modeForBox(box: number): QuestionMode {
   if (box === 2) return "translate";
   return "listen";
 }
+
+// Ab dieser Box zählt ein Wort auf der Startseite als "naučeno"
+export const KNOWN_FROM_BOX = 3;
+
+export function countProgress(state: SrsState, allWords: readonly string[]) {
+  let practiced = 0;
+  let known = 0;
+  for (const word of allWords) {
+    const card = state[word];
+    if (!card) continue;
+    practiced++;
+    if (card.box >= KNOWN_FROM_BOX) known++;
+  }
+  return { practiced, known, total: allWords.length };
+}

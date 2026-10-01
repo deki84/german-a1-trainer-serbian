@@ -6,7 +6,6 @@ import { pickPraise } from "@/lib/quiz";
 import { speakGerman } from "@/lib/speech";
 import type { Question } from "@/lib/types";
 
-
 type QuestionCardProps = {
   question: Question;
   onCorrect: () => void;
@@ -30,7 +29,7 @@ export function QuestionCard({ question, onCorrect, onRetry }: QuestionCardProps
   const isCorrect = answered && options[selected]?.correct === true;
 
   useEffect(() => {
-    if (mode === "listen" ) speakGerman(word.de);
+    if (mode === "listen") speakGerman(word.de);
   }, [mode, word.de]);
 
   function handleSelect(index: number) {
