@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { useSrs } from "@/hooks/useSrs";
 import { useStore } from "@/hooks/useStore";
-import { newWordsOn, streak } from "@/lib/days";
+import { newWordsOn, streak, lastSevenDays } from "@/lib/days";
 import { dayStore } from "@/lib/progressStorage";
 import { DAILY_GOAL, countToday } from "@/lib/session";
 import { dateKey } from "@/lib/srs";
+import { WeekStrip } from "@/components/WeekStrip";
 
 // Serbische Mehrzahl: 1 reč, 2–4 reči, 5+ reči (auch 21 reč, 22 reči, 25 reči …)
 function plural(n: number, one: string, few: string, many: string): string {
@@ -35,10 +36,10 @@ function PlayIcon() {
 export function TodayButton({ allWords }: { allWords: string[] }) {
   const srs = useSrs();
   const days = useStore(dayStore);
-
   const today = dateKey();
   const { reviews, fresh } = countToday(srs, allWords, today, DAILY_GOAL, newWordsOn(days, today));
   const currentStreak = streak(days, today);
+  const week = lastSevenDays(days, today);
   const done = reviews + fresh === 0;
 
   const streakText =
@@ -51,7 +52,10 @@ export function TodayButton({ allWords }: { allWords: string[] }) {
       <div className="border-good bg-good-soft mt-8 rounded-3xl border-2 p-6 md:p-8">
         <p className="text-2xl font-bold md:text-3xl">Danas urađeno ✅</p>
         <p className="text-muted mt-1 text-lg">Vidimo se sutra.</p>
-        <p className="mt-4 text-lg font-bold">🔥 {streakText}</p>
+        <div className="mt-5">
+          <WeekStrip days={week} />
+        </div>
+        <p className="mt-3 text-lg font-bold">🔥 {streakText}</p>
       </div>
     );
   }
@@ -73,7 +77,10 @@ export function TodayButton({ allWords }: { allWords: string[] }) {
           <PlayIcon />
         </span>
       </div>
-      <p className="mt-5 text-lg font-bold">🔥 {streakText}</p>
+      <div className="mt-5">
+        <WeekStrip days={week} />
+      </div>
+      <p className="mt-3 text-lg font-bold">🔥 {streakText}</p>
     </Link>
   );
 }

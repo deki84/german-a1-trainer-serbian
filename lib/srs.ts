@@ -71,3 +71,23 @@ export function countProgress(state: SrsState, allWords: readonly string[]) {
   }
   return { practiced, known, total: allWords.length };
 }
+
+const MILESTONES = [10, 25, 50, 100, 200, 400];
+
+// Nächstes Zwischenziel: kleine, erreichbare Schritte statt "0 von 794"
+export function nextMilestone(known: number, total: number): number {
+  return MILESTONES.find((goal) => goal > known && goal < total) ?? total;
+}
+
+// Für die Fortschrittskarte: wie weit sind die geübten Wörter?
+export function countStages(state: SrsState, allWords: readonly string[]) {
+  const stages = { learning: 0, known: 0, mastered: 0 };
+  for (const word of allWords) {
+    const box = state[word]?.box;
+    if (box === undefined) continue;
+    if (box >= MAX_BOX) stages.mastered++;
+    else if (box >= KNOWN_FROM_BOX) stages.known++;
+    else stages.learning++;
+  }
+  return stages;
+}

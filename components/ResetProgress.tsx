@@ -14,9 +14,11 @@ export function ResetProgress() {
     <button
       type="button"
       onClick={handleClick}
-      className="text-muted min-h-12 cursor-pointer px-4 text-sm underline"
+      aria-label="Obriši napredak"
+      title="Obriši napredak"
+      className="hover:bg-gentle-soft -mt-2 -mr-2 flex h-12 w-12 flex-none cursor-pointer items-center justify-center rounded-full text-xl opacity-60 hover:opacity-100"
     >
-      Obriši napredak
+      <span aria-hidden="true">🗑️</span>
     </button>
   );
 }

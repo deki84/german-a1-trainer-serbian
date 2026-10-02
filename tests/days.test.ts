@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addSession, newWordsOn, parseDayLog, streak } from "@/lib/days";
+import { addSession, lastSevenDays, newWordsOn, parseDayLog, streak } from "@/lib/days";
 
 const today = "2026-10-01";
 
@@ -61,5 +61,25 @@ describe("streak", () => {
   it("klappt über den Monatswechsel", () => {
     const log = { ...day("2026-09-30"), ...day(today) };
     expect(streak(log, today)).toBe(2);
+  });
+});
+
+describe("lastSevenDays", () => {
+  it("liefert 7 Tage bis heute, der älteste zuerst", () => {
+    const week = lastSevenDays({}, today);
+    expect(week).toHaveLength(7);
+    expect(week[0]?.day).toBe("2026-09-25");
+    expect(week[6]?.day).toBe(today);
+    expect(week[6]?.isToday).toBe(true);
+  });
+
+  it("markiert Tage mit Training", () => {
+    const week = lastSevenDays({ "2026-09-30": { newWords: 5, reviews: 0 } }, today);
+    expect(week.filter((day) => day.trained).map((day) => day.day)).toEqual(["2026-09-30"]);
+  });
+
+  it("hat serbische Wochentage", () => {
+    // 2026-10-01 ist ein Donnerstag
+    expect(lastSevenDays({}, today)[6]?.label).toBe("Če");
   });
 });

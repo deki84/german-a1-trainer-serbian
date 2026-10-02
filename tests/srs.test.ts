@@ -4,11 +4,13 @@ import {
   MAX_BOX,
   addDays,
   countProgress,
+  countStages,
   dateKey,
   getDueWords,
   isDue,
   isLearned,
   modeForBox,
+  nextMilestone,
   reviewCard,
 } from "@/lib/srs";
 
@@ -119,5 +121,50 @@ describe("countProgress", () => {
   it("ignoriert gespeicherte Wörter, die es nicht mehr gibt", () => {
     const state = { "gibt es nicht": { box: 5, due: today } };
     expect(countProgress(state, words)).toEqual({ practiced: 0, known: 0, total: 4 });
+  });
+});
+
+describe("nextMilestone", () => {
+  it("am Anfang ist das Ziel 10", () => {
+    expect(nextMilestone(0, 794)).toBe(10);
+    expect(nextMilestone(9, 794)).toBe(10);
+  });
+
+  it("ist das Ziel erreicht, kommt das nächste", () => {
+    expect(nextMilestone(10, 794)).toBe(25);
+    expect(nextMilestone(150, 794)).toBe(200);
+  });
+
+  it("am Ende ist das Ziel die Gesamtzahl", () => {
+    expect(nextMilestone(400, 794)).toBe(794);
+    expect(nextMilestone(794, 794)).toBe(794);
+  });
+});
+
+describe("countStages", () => {
+  it("teilt geübte Wörter in drei Stufen", () => {
+    const state = {
+      a: { box: 1, due: today },
+      b: { box: 2, due: today },
+      c: { box: KNOWN_FROM_BOX, due: today },
+      d: { box: MAX_BOX - 1, due: today },
+      e: { box: MAX_BOX, due: today },
+    };
+    expect(countStages(state, ["a", "b", "c", "d", "e", "f"])).toEqual({
+      learning: 2,
+      known: 2,
+      mastered: 1,
+    });
+  });
+
+  it("passt zu countProgress: known dort = Znam + 🏆 hier", () => {
+    const state = {
+      a: { box: 1, due: today },
+      b: { box: 4, due: today },
+      c: { box: 6, due: today },
+    };
+    const words = ["a", "b", "c"];
+    const stages = countStages(state, words);
+    expect(stages.known + stages.mastered).toBe(countProgress(state, words).known);
   });
 });

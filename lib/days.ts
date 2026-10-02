@@ -55,3 +55,27 @@ export function streak(log: DayLog, today: string): number {
   }
   return count;
 }
+
+const WEEKDAYS = ["Ne", "Po", "Ut", "Sr", "Če", "Pe", "Su"]; // Index = Date.getDay(), 0 = Sonntag
+
+export type WeekDay = {
+  day: string;
+  label: string;
+  trained: boolean;
+  isToday: boolean;
+};
+
+// Die letzten 7 Tage bis heute, der älteste zuerst
+export function lastSevenDays(log: DayLog, today: string): WeekDay[] {
+  return Array.from({ length: 7 }, (_, index) => {
+    const day = addDays(today, index - 6);
+    const [y, m, d] = day.split("-").map(Number);
+    const weekday = new Date(y ?? 0, (m ?? 1) - 1, d ?? 1).getDay();
+    return {
+      day,
+      label: WEEKDAYS[weekday] ?? "",
+      trained: Boolean(log[day]),
+      isToday: day === today,
+    };
+  });
+}
