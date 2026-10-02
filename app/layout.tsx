@@ -29,8 +29,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="sr">
       <body className={`${atkinson.className} bg-bg text-ink antialiased`}>
-         <TabBar />
-    <div className="pb-28">{children}</div>
+        <TabBar />
+        <div className="pb-28">{children}</div>
       </body>
     </html>
   );

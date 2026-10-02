@@ -77,3 +77,12 @@ export function subscribeSrs(onChange: () => void): () => void {
     window.removeEventListener("storage", onChange);
   };
 }
+
+export function clearSrs(): void {
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // nichts zu tun
+  }
+  window.dispatchEvent(new Event(CHANGE_EVENT));
+}

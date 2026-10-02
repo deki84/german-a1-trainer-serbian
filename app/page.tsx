@@ -1,6 +1,7 @@
 import { ProgressCard } from "@/components/ProgressCard";
 import { TodayButton } from "@/components/TodayButton";
 import { LESSONS } from "@/data/lessons";
+import { ResetProgress } from "@/components/ResetProgress";
 
 // Nur die deutschen Wörter an den Browser geben, nicht die ganze Wortliste
 const allWords = LESSONS.flatMap((lesson) => lesson.words.map((word) => word.de));
@@ -20,6 +21,9 @@ export default function HomePage() {
 
       <TodayButton allWords={allWords} />
       <ProgressCard allWords={allWords} />
+      <div className="mt-12 text-center">
+        <ResetProgress />
+      </div>
     </main>
   );
 }

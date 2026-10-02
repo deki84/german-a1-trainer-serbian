@@ -8,7 +8,10 @@ export const runtime = "nodejs";
 const MODEL = process.env.LLM_MODEL ?? "openai/gpt-oss-120b";
 
 function textResponse(message: string, status: number) {
-  return new Response(message, { status, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+  return new Response(message, {
+    status,
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
 }
 
 export async function POST(request: Request) {
