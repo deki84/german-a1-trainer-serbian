@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible } from "next/font/google";
 import "./globals.css";
 import { TabBar } from "@/components/TabBar";
+import { ClerkProvider } from "@clerk/nextjs";
+import { srRS } from "@clerk/localizations";
 
 /**
  * Atkinson Hyperlegible wurde für gute Lesbarkeit entwickelt.
@@ -27,11 +29,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="sr">
-      <body className={`${atkinson.className} bg-bg text-ink antialiased`}>
-        <TabBar />
-        <div className="pb-28">{children}</div>
-      </body>
-    </html>
+   <ClerkProvider localization={srRS}>
+      <html lang="sr">
+        <body className={`${atkinson.className} bg-bg text-ink antialiased`}>
+          <TabBar />
+          <div className="pb-28">{children}</div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
