@@ -17,9 +17,8 @@ if (pathname.startsWith("/lesson/") || pathname.startsWith("/today")) return nul
   return (
     <nav
       aria-label="Glavna navigacija"
-      // Handy: unten fixiert (Daumenzone). Ab Tablet: oben.
-      className="border-line bg-surface fixed inset-x-0 bottom-0 z-10 border-t-2 pb-[env(safe-area-inset-bottom)] md:sticky md:top-0 md:bottom-auto md:border-t-0 md:border-b-2 md:pb-0"
-    >
+     
+   className="border-line bg-surface fixed inset-x-0 bottom-0 z-10 border-t-2 pb-[env(safe-area-inset-bottom)]"    >
       <ul className="mx-auto grid max-w-md grid-cols-3 md:max-w-3xl">
         {TABS.map((tab) => {
           const active = tab.match(pathname);
