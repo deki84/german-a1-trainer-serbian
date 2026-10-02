@@ -143,7 +143,7 @@ export function ChatWindow() {
     <div className="flex flex-col">
       <div className="space-y-3" aria-live="polite">
         <Bubble role="assistant">
-          Zdravo! 👋 Ja sam tvoj učitelj nemačkog. Piši, ili drži 🎤 i pričaj sa mnom.
+          Zdravo! 👋 Ja sam Deki tvoj učitelj nemačkog. Piši, ili drži 🎤 i pričaj sa mnom.
         </Bubble>
 
         {messages.map((message, index) => {
