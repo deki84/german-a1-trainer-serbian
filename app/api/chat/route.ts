@@ -32,7 +32,15 @@ export async function POST(request: Request) {
   try {
     const stream = await groq.chat.completions.create({
       model: MODEL,
-      messages: [{ role: "system", content: TUTOR_PROMPT }, ...messages],
+      messages: [
+        {
+          role: "system",
+      
+          content: TUTOR_PROMPT + "\n\nSTRIKTE REGELN FÜR FLÜSSIGEN AUDIO-TEXT:\n1. Verwende NIEMALS eckige Klammern wie [tvoje ime]! Schreibe stattdessen einfach z.B. tvoje ime oder ime ohne Klammern.\n2. Verwende NIEMALS kyrillische Buchstaben." 
+        }, 
+        ...messages
+      ],
+      
       temperature: 0.3,
       max_completion_tokens: 800,
       reasoning_effort: "low", // schneller, für einfache Erklärungen reicht das
