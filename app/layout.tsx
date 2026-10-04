@@ -18,18 +18,22 @@ const atkinson = Atkinson_Hyperlegible({
 export const metadata: Metadata = {
   title: "Nemački korak po korak",
   description: "Učimo nemački: jedna reč, pa jedno pitanje.",
+  appleWebApp: { capable: true, title: "Nemački", statusBarStyle: "default" },
 };
 
-// viewportFit "cover" nutzt beim iPhone den ganzen Bildschirm (Notch)
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f7f4" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f1a20" },
+  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-   <ClerkProvider localization={srRS}>
+    <ClerkProvider localization={srRS}>
       <html lang="sr">
         <body className={`${atkinson.className} bg-bg text-ink antialiased`}>
           <TabBar />

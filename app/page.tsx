@@ -2,6 +2,7 @@ import { ProgressCard } from "@/components/ProgressCard";
 
 import { TodayButton } from "@/components/TodayButton";
 import { LESSONS } from "@/data/lessons";
+import { InstallHint } from "@/components/InstallHint";
 
 const allWords = LESSONS.flatMap((lesson) => lesson.words.map((word) => word.de));
 
@@ -19,6 +20,7 @@ export default function HomePage() {
 
       <TodayButton allWords={allWords} />
       <ProgressCard allWords={allWords} />
+      <InstallHint />
     </main>
   );
 }

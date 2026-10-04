@@ -249,7 +249,7 @@ Definition of Done: läuft am Handy, responsive (375 / 768 / 1280 px), hell und 
 - [x] **Phase 4: Lektionsablauf:** State Machine `learn → quiz → finish`, Fortschrittspunkte, Sterne
 - [x] **Phase 5: Leitner-System:** `lib/srs.ts` mit Tests (Boxen, Fälligkeit), Speichern in `localStorage` ohne Hydration-Fehler
 - [x] **Phase 6: Tägliches Training:** `/today` mit Wiederholen + neuen Wörtern, Tagesziel 15min, 🔥 Serie
-- [ ] **Phase 7: KI-Lehrer:** Groq-Route mit Streaming, Chat-UI, antippbare Wörter, 🎤, Clerk
+- [x] **Phase 7: KI-Lehrer:** Groq-Route mit Streaming, Chat-UI, antippbare Wörter, 🎤, Clerk
 - [ ] **Phase 8: Lückentext & Feinschliff:** Beispielsätze, Lückentext als Box-4-Abfrage, PWA, Barrierefreiheits-Check, Test mit echtem Lernenden
 
 ## Nächste Ausbaustufen

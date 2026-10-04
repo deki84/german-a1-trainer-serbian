@@ -1,5 +1,5 @@
 import { SignInButton } from "@clerk/nextjs";
-import Link from "next/link";
+
 
 // Wird statt des Chats gezeigt, solange man nicht angemeldet ist
 export function ChatGate() {
@@ -23,10 +23,11 @@ export function ChatGate() {
               Prijavi se
             </button>
           </SignInButton>
-       
         </div>
 
-        <p className="text-muted mt-6 text-sm">Lekcije i trening su besplatni i rade bez prijave.</p>
+        <p className="text-muted mt-6 text-sm">
+          Lekcije i trening su besplatni i rade bez prijave.
+        </p>
       </section>
     </main>
   );
