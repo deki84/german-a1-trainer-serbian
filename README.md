@@ -28,10 +28,7 @@ das nicht. Diese App ist für jemanden gebaut, der:
 - **wenig liest und schreibt** (Alpha-/Basisbildungs-Niveau),
 - hauptsächlich das **Handy** benutzt.
 
-Der Wortschatz stammt ausschließlich aus der offiziellen **Goethe-Institut
-A1-Wortliste („Start Deutsch 1“)**, also genau aus den Wörtern, die für die
-erste Deutschprüfung (z. B. beim Ehegattennachzug) verlangt werden.
-Das Projekt ist unabhängig und nicht mit dem Goethe-Institut verbunden.
+A1 Trainer (Deutsch – Serbisch): Eine Web-App zum Erlernen des grundlegenden A1-Wortschatzes für Deutschlerner mit serbischer Muttersprache. Inklusive KI-gestütztem Tutor für Grammatik und Beispielsätze.
 
 ## Architektur
 
