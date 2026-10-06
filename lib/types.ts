@@ -4,7 +4,6 @@
  * dadurch bleiben Daten und Oberfläche überall konsistent.
  */
 
-/** Ein einzelnes Wort aus der Goethe-A1-Wortliste. */
 export type Word = {
   /** Deutsches Wort, Nomen immer mit Artikel, z. B. "das Wasser" */
   de: string;

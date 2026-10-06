@@ -152,8 +152,7 @@ und wie es abgefragt wird:
 - Die meisten Studien wurden mit Studierenden durchgeführt, die gut lesen können.
   Zu Lernenden mit geringer Lesekompetenz gibt es deutlich weniger Forschung.
 - Die App trainiert **Wortschatz und Hörverstehen**. Für die Prüfung Start Deutsch 1
-  braucht es zusätzlich Sprechen, einfache Sätze und Formulare. Das Goethe-Institut
-  empfiehlt dafür selbst einen Sprachkurs. Die App ist eine Ergänzung, kein Ersatz.
+  braucht es zusätzlich Sprechen, einfache Sätze und Formulare.
 
 ## Setup
 

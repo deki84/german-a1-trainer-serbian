@@ -40,6 +40,6 @@ export function buildTutorPrompt(relevant: readonly Word[]): string {
 PROVERENE REČI ZA OVO PITANJE:
 ${verified}
 
-SVE REČI SA GOETHE A1 LISTE (koristi ih kad god možeš):
+SVE REČI Sto sam ti poslao iz A1 LISTE (koristi ih kad god možeš):
 ${ALL_WORDS}`;
 }
