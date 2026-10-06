@@ -14,15 +14,36 @@ const ARTICLES = /^(der|die|das) /;
 
 // Fragewörter und Füllwörter sagen nichts über das gesuchte Wort
 const STOPWORDS = new Set([
-  "sta", "kako", "kaze", "kazem", "kazes", "kazati", "znaci", "koji", "koja", "koje", "gde",
-  "kada", "zasto", "moze", "mogu", "hocu", "treba", "nemacki", "nemackom", "rec", "reci",
+  "sta",
+  "kako",
+  "kaze",
+  "kazem",
+  "kazes",
+  "kazati",
+  "znaci",
+  "koji",
+  "koja",
+  "koje",
+  "gde",
+  "kada",
+  "zasto",
+  "moze",
+  "mogu",
+  "hocu",
+  "treba",
+  "nemacki",
+  "nemackom",
+  "rec",
+  "reci",
 ]);
 
 // Häufige Abkürzungen und Umgangssprache
 const ALIASES: Record<string, string> = { vc: "toalet", wc: "toalet" };
 
 function wordsOf(text: string): string[] {
-  return normalize(text).split(/[^\p{L}]+/u).filter((token) => token.length >= 3);
+  return normalize(text)
+    .split(/[^\p{L}]+/u)
+    .filter((token) => token.length >= 3);
 }
 
 // Serbisch wird gebeugt: "kartu", "karte" → Stamm "kart"
@@ -31,7 +52,11 @@ function stem(token: string): string {
 }
 
 // Einfaches Retrieval: passende geprüfte Wörter zur Frage finden
-export function findRelevantWords(question: string, lessons: readonly Lesson[], limit = 12): Word[] {
+export function findRelevantWords(
+  question: string,
+  lessons: readonly Lesson[],
+  limit = 12,
+): Word[] {
   // Abkürzungen nur in der Frage ersetzen, nicht in den Daten
   const tokens = normalize(question)
     .split(/[^\p{L}]+/u)

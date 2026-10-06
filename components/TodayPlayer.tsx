@@ -8,7 +8,9 @@ import { useSrs } from "@/hooks/useSrs";
 import { useStore } from "@/hooks/useStore";
 import { newWordsOn, streak } from "@/lib/days";
 import { dayStore, recordSession } from "@/lib/progressStorage";
-import { buildQuestion, calculateStars } from "@/lib/quiz";
+import { SENTENCES } from "@/data/sentences";
+import { buildAnyQuestion } from "@/lib/gap";
+import { calculateStars } from "@/lib/quiz";
 import { buildDailySession, DAILY_GOAL, type DailyGoal, type SessionItem } from "@/lib/session";
 import { speakGerman } from "@/lib/speech";
 import { dateKey } from "@/lib/srs";
@@ -45,7 +47,7 @@ export function TodayPlayer({ lessons }: { lessons: Lesson[] }) {
   const newCount = preview.filter((entry) => entry.kind === "new").length;
 
   function ask(next: SessionItem) {
-    setQuestion(buildQuestion(next.word, next.pool, next.mode));
+    setQuestion(buildAnyQuestion(next.word, next.pool, next.mode, SENTENCES));
     setAttempt((count) => count + 1);
     setPhase("quiz");
   }
@@ -171,6 +173,7 @@ export function TodayPlayer({ lessons }: { lessons: Lesson[] }) {
       <div
         className="bg-line h-3 overflow-hidden rounded-full"
         role="progressbar"
+        aria-label="Napredak treninga"
         aria-valuenow={progress}
         aria-valuemin={0}
         aria-valuemax={100}

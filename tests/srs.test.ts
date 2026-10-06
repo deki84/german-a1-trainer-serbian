@@ -94,77 +94,79 @@ describe("isLearned und modeForBox", () => {
     expect(isLearned(undefined)).toBe(false);
   });
 
-  it("Fragetyp wird mit der Box schwerer", () => {
+  it("Fragetyp wird mit der Box schwerer, ab Box 4 Lückentext", () => {
     expect(modeForBox(1)).toBe("meaning");
     expect(modeForBox(2)).toBe("translate");
     expect(modeForBox(3)).toBe("listen");
-    expect(modeForBox(6)).toBe("listen");
-  });
-});
-
-describe("countProgress", () => {
-  const words = ["Hallo", "danke", "bitte", "ja"];
-
-  it("ohne Training ist alles 0", () => {
-    expect(countProgress({}, words)).toEqual({ practiced: 0, known: 0, total: 4 });
+    expect(modeForBox(4)).toBe("gap");
+    expect(modeForBox(5)).toBe("translate");
+    expect(modeForBox(6)).toBe("gap");
   });
 
-  it("zählt geübte Wörter und gelernte ab Box 3", () => {
-    const state = {
-      Hallo: { box: 1, due: today },
-      danke: { box: KNOWN_FROM_BOX, due: today },
-      bitte: { box: MAX_BOX, due: today },
-    };
-    expect(countProgress(state, words)).toEqual({ practiced: 3, known: 2, total: 4 });
-  });
+  describe("countProgress", () => {
+    const words = ["Hallo", "danke", "bitte", "ja"];
 
-  it("ignoriert gespeicherte Wörter, die es nicht mehr gibt", () => {
-    const state = { "gibt es nicht": { box: 5, due: today } };
-    expect(countProgress(state, words)).toEqual({ practiced: 0, known: 0, total: 4 });
-  });
-});
+    it("ohne Training ist alles 0", () => {
+      expect(countProgress({}, words)).toEqual({ practiced: 0, known: 0, total: 4 });
+    });
 
-describe("nextMilestone", () => {
-  it("am Anfang ist das Ziel 10", () => {
-    expect(nextMilestone(0, 794)).toBe(10);
-    expect(nextMilestone(9, 794)).toBe(10);
-  });
+    it("zählt geübte Wörter und gelernte ab Box 3", () => {
+      const state = {
+        Hallo: { box: 1, due: today },
+        danke: { box: KNOWN_FROM_BOX, due: today },
+        bitte: { box: MAX_BOX, due: today },
+      };
+      expect(countProgress(state, words)).toEqual({ practiced: 3, known: 2, total: 4 });
+    });
 
-  it("ist das Ziel erreicht, kommt das nächste", () => {
-    expect(nextMilestone(10, 794)).toBe(25);
-    expect(nextMilestone(150, 794)).toBe(200);
-  });
-
-  it("am Ende ist das Ziel die Gesamtzahl", () => {
-    expect(nextMilestone(400, 794)).toBe(794);
-    expect(nextMilestone(794, 794)).toBe(794);
-  });
-});
-
-describe("countStages", () => {
-  it("teilt geübte Wörter in drei Stufen", () => {
-    const state = {
-      a: { box: 1, due: today },
-      b: { box: 2, due: today },
-      c: { box: KNOWN_FROM_BOX, due: today },
-      d: { box: MAX_BOX - 1, due: today },
-      e: { box: MAX_BOX, due: today },
-    };
-    expect(countStages(state, ["a", "b", "c", "d", "e", "f"])).toEqual({
-      learning: 2,
-      known: 2,
-      mastered: 1,
+    it("ignoriert gespeicherte Wörter, die es nicht mehr gibt", () => {
+      const state = { "gibt es nicht": { box: 5, due: today } };
+      expect(countProgress(state, words)).toEqual({ practiced: 0, known: 0, total: 4 });
     });
   });
 
-  it("passt zu countProgress: known dort = Znam + 🏆 hier", () => {
-    const state = {
-      a: { box: 1, due: today },
-      b: { box: 4, due: today },
-      c: { box: 6, due: today },
-    };
-    const words = ["a", "b", "c"];
-    const stages = countStages(state, words);
-    expect(stages.known + stages.mastered).toBe(countProgress(state, words).known);
+  describe("nextMilestone", () => {
+    it("am Anfang ist das Ziel 10", () => {
+      expect(nextMilestone(0, 794)).toBe(10);
+      expect(nextMilestone(9, 794)).toBe(10);
+    });
+
+    it("ist das Ziel erreicht, kommt das nächste", () => {
+      expect(nextMilestone(10, 794)).toBe(25);
+      expect(nextMilestone(150, 794)).toBe(200);
+    });
+
+    it("am Ende ist das Ziel die Gesamtzahl", () => {
+      expect(nextMilestone(400, 794)).toBe(794);
+      expect(nextMilestone(794, 794)).toBe(794);
+    });
+  });
+
+  describe("countStages", () => {
+    it("teilt geübte Wörter in drei Stufen", () => {
+      const state = {
+        a: { box: 1, due: today },
+        b: { box: 2, due: today },
+        c: { box: KNOWN_FROM_BOX, due: today },
+        d: { box: MAX_BOX - 1, due: today },
+        e: { box: MAX_BOX, due: today },
+      };
+      expect(countStages(state, ["a", "b", "c", "d", "e", "f"])).toEqual({
+        learning: 2,
+        known: 2,
+        mastered: 1,
+      });
+    });
+
+    it("passt zu countProgress: known dort = Znam + 🏆 hier", () => {
+      const state = {
+        a: { box: 1, due: today },
+        b: { box: 4, due: today },
+        c: { box: 6, due: today },
+      };
+      const words = ["a", "b", "c"];
+      const stages = countStages(state, words);
+      expect(stages.known + stages.mastered).toBe(countProgress(state, words).known);
+    });
   });
 });

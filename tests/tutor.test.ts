@@ -57,7 +57,9 @@ describe("findRelevantWords", () => {
 
 describe("buildTutorPrompt", () => {
   it("enthält die geprüften Wörter mit Übersetzung und Aussprache", () => {
-    const toilet = LESSONS.flatMap((lesson) => lesson.words).find((word) => word.de === "die Toilette");
+    const toilet = LESSONS.flatMap((lesson) => lesson.words).find(
+      (word) => word.de === "die Toilette",
+    );
     const prompt = buildTutorPrompt(toilet ? [toilet] : []);
     expect(prompt).toContain("die Toilette = toalet");
     expect(prompt).toContain("NIKADA ćirilicom");

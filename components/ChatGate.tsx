@@ -1,6 +1,5 @@
 import { SignInButton } from "@clerk/nextjs";
 
-
 // Wird statt des Chats gezeigt, solange man nicht angemeldet ist
 export function ChatGate() {
   return (

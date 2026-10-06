@@ -51,10 +51,13 @@ export function isLearned(card: CardState | undefined): boolean {
   return card?.box === MAX_BOX;
 }
 
+// Box 1–3 wie bisher, ab Box 4 Lückentext (Box 5 gemischt: wieder Serbisch → Deutsch)
 export function modeForBox(box: number): QuestionMode {
   if (box <= 1) return "meaning";
   if (box === 2) return "translate";
-  return "listen";
+  if (box === 3) return "listen";
+  if (box === 5) return "translate";
+  return "gap";
 }
 
 // Ab dieser Box zählt ein Wort auf der Startseite als "naučeno"

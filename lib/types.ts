@@ -38,7 +38,7 @@ export type Lesson = {
   words: Word[];
 };
 
-export type QuestionMode = "meaning" | "translate" | "listen";
+export type QuestionMode = "meaning" | "translate" | "listen" | "gap";
 
 export type AnswerOption = {
   text: string;
@@ -50,4 +50,20 @@ export type Question = {
   mode: QuestionMode;
   word: Word;
   options: [AnswerOption, AnswerOption];
+
+  sentence?: { text: string; sr: string; answer: string };
+};
+
+/** Ein Lückensatz: text enthält genau einmal "___" */
+export type GapSentence = {
+  /** Das Lernwort, zu dem der Satz gehört, z. B. "wohnen" */
+  word: string;
+  /** "Ich ___ in München." */
+  text: string;
+  /** "wohne" */
+  answer: string;
+  /** "wohnt" (eindeutig falsch) */
+  wrong: string;
+  /** Serbische Übersetzung des ganzen Satzes */
+  sr: string;
 };
