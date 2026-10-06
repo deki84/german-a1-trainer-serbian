@@ -1,7 +1,6 @@
 import type { Lesson, Section } from "@/lib/types";
 
 /**
- * Wortschatz der App: die komplette Goethe-A1-Wortliste ("Start Deutsch 1").
  *
  * Aufbau nach Lernreihenfolge:
  * 1. Prvi koraci: die wichtigsten Alltagswörter zuerst
