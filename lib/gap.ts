@@ -8,6 +8,17 @@ export function fillBlank(text: string, answer: string): string {
   return text.replace(BLANK, answer);
 }
 
+// Beispielsatz für die Wortkarte: immer der erste Satz zum Wort, damit er sich nicht ändert
+export function exampleFor(
+  word: string,
+  sentences: readonly GapSentence[],
+): { text: string; sr: string } | undefined {
+  const sentence = sentences.find((entry) => entry.word === word);
+  return sentence
+    ? { text: fillBlank(sentence.text, sentence.answer), sr: sentence.sr }
+    : undefined;
+}
+
 export function findSentence(
   word: string,
   sentences: readonly GapSentence[],

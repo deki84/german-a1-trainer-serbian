@@ -28,8 +28,6 @@ das nicht. Diese App ist für jemanden gebaut, der:
 - **wenig liest und schreibt** (Alpha-/Basisbildungs-Niveau),
 - hauptsächlich das **Handy** benutzt.
 
-A1 Trainer (Deutsch – Serbisch): Eine Web-App zum Erlernen des grundlegenden A1-Wortschatzes für Deutschlerner mit serbischer Muttersprache. Inklusive KI-gestütztem Tutor für Grammatik und Beispielsätze.
-
 ## Architektur
 
 ```
@@ -110,7 +108,7 @@ Lesekompetenz funktionieren.
 | **Wachsende Abstände helfen leicht.** Immer größere Abstände zwischen Wiederholungen sind etwas besser als gleich bleibende. Der ideale Abstand wächst mit der Zeit, die man sich etwas merken will. | Nakata (2015), _Studies in Second Language Acquisition_; Cepeda et al. (2006) | Leitner-System mit Abständen von 1, 2, 4, 8, 16 und 32 Tagen.                               |
 | **Abstand wichtiger als Paketgröße.** Ob man in Päckchen von 4 oder 20 Wörtern lernt, macht wenig aus; die Abstände zwischen den Wiederholungen machen viel aus.                                     | Nakata & Webb (2016), _Studies in Second Language Acquisition_                | Kleine Lektionen (ca. 8 Wörter) zur Übersicht, entscheidend ist aber der Wiederholungsplan. |
 | **Wiedererkennen vor aktivem Erinnern.** Auswahlfragen sind der leichtere Einstieg; aktives Abrufen baut stärkeres, produktives Wissen auf.                                                          | Forschung zu Abfrageformaten beim Vokabellernen                               | Schwierigkeit steigt pro Wort: Bedeutung erkennen → Wort erkennen → nur hören → Lückentext. |
-| **Lückentexte allein sind schwach.** In einer Meta-Analyse zu Vokabelübungen zeigten Lückentexte nur kleine, unsichere Effekte, Karteikarten deutlich größere.                                       | Webb et al. (2020), Meta-Analyse, _The Modern Language Journal_               | Lückentext nur als späte Stufe für Wörter, die schon sitzen.                                |
+| **Karteikarten verknüpfen Wort und Bedeutung am besten.** Lückentexte ergänzen das erst, wenn ein Wort schon sitzt.                                                                                  | Webb et al. (2020), Meta-Analyse, _The Modern Language Journal_               | Lückentext nur als späte Stufe (Box 4 und 6) für Wörter, die schon sitzen.                  |
 | **Bei geringer Lesekompetenz: erst mündlich.** Lesen und Schreiben bauen auf mündlichen Fähigkeiten auf; die Erstsprache zur Erklärung hilft.                                                        | LESLLA-Forschung (Literacy Education and Second Language Learning for Adults) | Audio bei jedem Wort, Emojis, Erklärungen auf Serbisch, eine Stufe „nur hören“.             |
 
 ### Das tägliche Training (15–30 Minuten)
@@ -136,22 +134,25 @@ Lesekompetenz funktionieren.
 Jedes Wort liegt in einer von sechs „Boxen“. Die Box bestimmt, wann es wiederkommt
 und wie es abgefragt wird:
 
-| Box | Wiederholung nach | Abfrage                                             |
-| --- | ----------------- | --------------------------------------------------- |
-| 1   | 1 Tag             | Wortkarte mit Bild und Audio → „Šta znači …?“ (A/B) |
-| 2   | 2 Tagen           | „Kako se kaže …?“ (Serbisch → Deutsch, A/B)         |
-| 3   | 4 Tagen           | Nur hören: Audio → Bedeutung wählen                 |
-| 4   | 8 Tagen           | Lückentext im Satz                                  |
-| 5   | 16 Tagen          | gemischt                                            |
-| 6   | 32 Tagen          | gemischt, danach gilt das Wort als gelernt ✅       |
+| Box | Wiederholung nach | Abfrage                                                 |
+| --- | ----------------- | ------------------------------------------------------- |
+| 1   | 1 Tag             | Wortkarte mit Bild und Audio → „Šta znači …?“ (A/B)     |
+| 2   | 2 Tagen           | „Kako se kaže …?“ (Serbisch → Deutsch, A/B)             |
+| 3   | 4 Tagen           | Nur hören: Audio → Bedeutung wählen                     |
+| 4   | 8 Tagen           | Lückentext im Satz                                      |
+| 5   | 16 Tagen          | „Kako se kaže …?“ (Serbisch → Deutsch, A/B)             |
+| 6   | 32 Tagen          | Lückentext im Satz, danach gilt das Wort als gelernt ✅ |
 
 **Richtig** → eine Box weiter. **Falsch** → zurück in Box 1, mit sanfter Korrektur.
+
+Hat ein Wort keinen Beispielsatz, wird statt des Lückentexts eine Hörfrage gestellt.
+Der erste Lückentext erscheint frühestens etwa 15 Tage nach dem ersten Lernen eines Wortes.
 
 ### Ehrliche Grenzen
 
 - Die meisten Studien wurden mit Studierenden durchgeführt, die gut lesen können.
   Zu Lernenden mit geringer Lesekompetenz gibt es deutlich weniger Forschung.
-- Die App trainiert **Wortschatz und Hörverstehen**. Für die Prüfung Start Deutsch 1
+- Die App trainiert **Wortschatz und Hörverstehen**. Für eine A1-Prüfung
   braucht es zusätzlich Sprechen, einfache Sätze und Formulare.
 
 ## Setup
@@ -171,10 +172,12 @@ pnpm run dev -H 0.0.0.0    # dann http://<deine-IP>:3000 öffnen
 
 ### Umgebungsvariablen
 
-| Variable       | Pflicht    | Beschreibung                                                                                                            |
-| -------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `GROQ_API_KEY` | ab Phase 7 | Key von console.groq.com. **Nie committen, nie `NEXT_PUBLIC_` davor!**                                                  |
-| `LLM_MODEL`    | nein       | Modell-ID bei Groq, Standard `openai/gpt-oss-120b`. Aktive Modelle: [Groq Models](https://console.groq.com/docs/models) |
+| Variable                            | Pflicht    | Beschreibung                                                                                                            |
+| ----------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `GROQ_API_KEY`                      | ab Phase 7 | Key von console.groq.com. **Nie committen, nie `NEXT_PUBLIC_` davor!**                                                  |
+| `LLM_MODEL`                         | nein       | Modell-ID bei Groq, Standard `openai/gpt-oss-120b`. Aktive Modelle: [Groq Models](https://console.groq.com/docs/models) |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | ab Phase 7 | Öffentlicher Clerk-Key aus dem Clerk-Dashboard.                                                                         |
+| `CLERK_SECRET_KEY`                  | ab Phase 7 | Geheimer Clerk-Key. **Nie committen!**                                                                                  |
 
 ### Scripts
 
@@ -211,23 +214,30 @@ KI-Lehrer das API-Kontingent verbrauchen. Deshalb:
 
 ```
 ├── app/
-│   ├── layout.tsx              # Schrift, Metadaten, Viewport
-│   ├── page.tsx                # Startseite: 25 Rubriken zum Aufklappen, später Tagesziel und Chat
+│   ├── layout.tsx              # Schrift, Metadaten, Clerk, Tab-Leiste
+│   ├── page.tsx                # Startseite: Tagesziel, Serie, Rubriken
 │   ├── today/page.tsx          # Tägliches Training (Wiederholen + neue Wörter)
+│   ├── lessons/page.tsx        # Lektionsübersicht
 │   ├── lesson/[id]/page.tsx    # Lektion (statisch generiert)
 │   ├── chat/page.tsx           # KI-Lehrer
 │   ├── api/chat/route.ts       # Orchestriert LLM-Aufruf + Streaming
+│   ├── api/transcribe/route.ts # Spracheingabe (Whisper)
 │   └── manifest.ts             # PWA: "Zum Startbildschirm hinzufügen"
-├── components/                 # WordCard, QuestionCard, LessonPlayer, ChatWindow, …
-├── hooks/                      # useProgress, useStudyTimer, useSpeechInput, …
+├── components/                 # WordCard, QuestionCard, TodayPlayer, ChatWindow, …
+├── hooks/                      # useRecorder, useSrs, useStore
 ├── lib/
 │   ├── quiz.ts                 # A/B-Fragen bauen, mischen, Sterne berechnen
-│   ├── srs.ts                  # Leitner-System: Boxen, Fälligkeit, Tagesplan
-│   ├── studyTime.ts            # Lernzeit, Serie, Schätzung bis A1
-│   ├── speech.ts               # Vorlesen (Web Speech API)
+│   ├── gap.ts                  # Lückentext-Fragen und Beispielsätze
+│   ├── srs.ts                  # Leitner-System: Boxen, Fälligkeit, Fragetyp pro Box
+│   ├── session.ts              # Tagesplan: Wiederholen + neue Wörter
+│   ├── days.ts                 # Serie und Tagesverlauf
+│   ├── store.ts                # Speicher in localStorage
+│   ├── retrieve.ts             # Passende Wörter für den KI-Lehrer suchen
 │   ├── tutorPrompt.ts          # System-Prompt des KI-Lehrers
-│   └── types.ts                # Word, Section, Lesson, …
-├── data/                       # Wortschatz: 794 Wörter, 99 Lektionen, 25 Rubriken
+│   ├── speech.ts, audio.ts     # Vorlesen und Aufnahme
+│   └── types.ts                # Word, Lesson, Question, GapSentence, …
+├── data/                       # Wortschatz: 794 Wörter, 99 Lektionen, 25 Rubriken, Beispielsätze
+├── proxy.ts                    # Clerk-Schutz der API-Routen
 ├── tests/                      # Vitest
 └── .env.example                # Zeigt benötigte Umgebungsvariablen
 ```
@@ -246,7 +256,8 @@ Definition of Done: läuft am Handy, responsive (375 / 768 / 1280 px), hell und 
 - [x] **Phase 5: Leitner-System:** `lib/srs.ts` mit Tests (Boxen, Fälligkeit), Speichern in `localStorage` ohne Hydration-Fehler
 - [x] **Phase 6: Tägliches Training:** `/today` mit Wiederholen + neuen Wörtern, Tagesziel 15min, 🔥 Serie
 - [x] **Phase 7: KI-Lehrer:** Groq-Route mit Streaming, Chat-UI, antippbare Wörter, 🎤, Clerk
-- [ ] **Phase 8: Lückentext & Feinschliff:** Beispielsätze, Lückentext als Box-4-Abfrage, PWA, Barrierefreiheits-Check, Test mit echtem Lernenden
+- [x] **Phase 8: Lückentext & Feinschliff:** Beispielsätze (eigene Sätze), Lückentext in Box 4 und 6, PWA, Barrierefreiheits-Check
+- [ ] **Phase 9: Test mit echtem Lernenden:** Beobachten, wo er hängt; serbische Übersetzungen der Sätze von Muttersprachlern prüfen lassen
 
 ## Nächste Ausbaustufen
 
@@ -255,12 +266,24 @@ Bewusst nicht im ersten Wurf, aber als konkrete nächste Schritte durchdacht:
 - **Adaptiver Wiederholungsplan** (z. B. FSRS) statt fester Leitner-Abstände,
   berechnet aus den echten Antworten des Lernenden
 - **Sprechen üben:** Wort nachsprechen, Spracherkennung prüft die Aussprache
-- **Spracheingabe über Groq Whisper** statt Browser-Spracherkennung, die auf
-  iOS und Firefox unzuverlässig ist
 - **Accounts + Datenbank** (z. B. Supabase), damit Fortschritt geräteübergreifend
   gespeichert wird und mehrere Lernende möglich sind
 - **Umschalter Latinica ↔ Kyrillisch** für Lernende, die Kyrillisch gewohnt sind
 - **Weitere Ausgangssprachen** (Türkisch, Arabisch, …), da nur die Datenschicht wechselt
+
+## Bekannte Grenzen
+
+- Der Fortschritt liegt nur im Browser (`localStorage`). Beim Löschen der Browserdaten
+  oder beim Gerätewechsel ist er weg. Die installierte iPhone-App hat einen eigenen
+  Speicher, getrennt von Safari.
+- Die Sprachausgabe nutzt die Stimmen des Geräts. Eine serbische Stimme ist nicht überall vorhanden.
+- Nicht jedes Wort hat einen Beispielsatz, und die serbischen Übersetzungen der Sätze
+  müssen noch von Muttersprachlern geprüft werden.
+
+## Eigene Inhalte
+
+Als Grundlage dient eine öffentlich verfügbare A1-Wortliste. Übersetzungen,
+Aussprachehilfen, Reihenfolge, Beispielsätze und Texte der App sind eigene Arbeit.
 
 ## Stolperfallen
 

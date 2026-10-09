@@ -1,10 +1,16 @@
 import { describe, expect, it } from "vitest";
 import { LESSONS } from "@/data/lessons";
 import { SENTENCES } from "@/data/sentences";
-import { BLANK, buildAnyQuestion, buildGapQuestion, fillBlank, findSentence } from "@/lib/gap";
+import {
+  BLANK,
+  buildAnyQuestion,
+  buildGapQuestion,
+  fillBlank,
+  findSentence,
+  exampleFor,
+} from "@/lib/gap";
 import { normalize } from "@/lib/retrieve";
 import type { GapSentence, Word } from "@/lib/types";
-
 const wohnen: Word = { de: "wohnen", sr: "stanovati", say: "vonen", emoji: "🏠" };
 const gehen: Word = { de: "gehen", sr: "ići", say: "geen", emoji: "🚶" };
 const sample: GapSentence = {
@@ -112,5 +118,27 @@ describe("buildAnyQuestion", () => {
   it("andere Fragetypen bleiben unverändert", () => {
     expect(buildAnyQuestion(wohnen, pool, "meaning", [sample]).mode).toBe("meaning");
     expect(buildAnyQuestion(wohnen, pool, "translate", [sample]).mode).toBe("translate");
+  });
+});
+describe("exampleFor", () => {
+  it("liefert den ganzen Satz mit eingesetzter Lösung und der Übersetzung", () => {
+    expect(exampleFor("wohnen", [sample])).toEqual({
+      text: "Ich wohne in München.",
+      sr: "Stanujem u Minhenu.",
+    });
+  });
+
+  it("liefert undefined, wenn es keinen Satz gibt", () => {
+    expect(exampleFor("gehen", [sample])).toBeUndefined();
+  });
+
+  it("nimmt immer den ersten Satz, damit sich die Karte nicht ändert", () => {
+    const second: GapSentence = {
+      ...sample,
+      text: "Wir ___ in Wien.",
+      answer: "wohnen",
+      wrong: "wohnt",
+    };
+    expect(exampleFor("wohnen", [sample, second])?.text).toBe("Ich wohne in München.");
   });
 });
