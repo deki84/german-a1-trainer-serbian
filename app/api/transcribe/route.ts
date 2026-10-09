@@ -1,6 +1,7 @@
 import Groq from "groq-sdk";
 import { toLatin } from "@/lib/latin";
 import { isRateLimited } from "@/lib/rateLimit";
+import { isLikelyHallucination, type WhisperSegment } from "@/lib/transcript";
 
 export const runtime = "nodejs";
 
@@ -32,12 +33,20 @@ export async function POST(request: Request) {
     const groq = new Groq({ apiKey });
     const result = await groq.audio.transcriptions.create({
       file: audio,
-      model: "whisper-large-v3-turbo",
+      model: "whisper-large-v3",
       language: "sr",
       temperature: 0,
+      response_format: "verbose_json",
       // Hinweis an Whisper: es geht um Deutschlernen, deutsche Wörter kommen vor
-      prompt: "Pitanje učitelju nemačkog. Kako se kaže Danke, Hallo, Wasser, Toilette?",
+      prompt: "Pitanje učitelju nemačkog jezika.",
     });
+
+    // Die Typen kennen „segments“ nicht, zur Laufzeit ist es vorhanden
+    const segments = (result as unknown as { segments?: WhisperSegment[] }).segments ?? [];
+    if (isLikelyHallucination(result.text, segments)) {
+      return textResponse("Nisam te čuo. Probaj ponovo, malo glasnije. 🙂", 422);
+    }
+
     return Response.json({ text: toLatin(result.text.trim()) });
   } catch {
     return textResponse("Nisam razumeo snimak. Probaj ponovo.", 502);
