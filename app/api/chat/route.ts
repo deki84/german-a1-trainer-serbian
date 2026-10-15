@@ -48,8 +48,8 @@ export async function POST(request: Request) {
       model: MODEL,
       messages: [{ role: "system", content: systemPrompt }, ...messages],
       temperature: 0.3,
-      max_completion_tokens: 800,
-      reasoning_effort: "medium", // etwas mehr Nachdenken: versteht Tippfehler besser
+      max_completion_tokens: 1600,
+      reasoning_effort: "low", // etwas mehr Nachdenken: versteht Tippfehler besser
       stream: true,
     });
 
