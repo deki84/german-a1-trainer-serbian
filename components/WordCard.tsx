@@ -1,11 +1,11 @@
 import { ListenButton } from "@/components/ListenButton";
-import { SENTENCES } from "@/data/sentences";
+import { VISIBLE_SENTENCES } from "@/data/content";
 import { exampleFor } from "@/lib/gap";
 import type { Word } from "@/lib/types";
 
 export function WordCard({ word }: { word: Word }) {
   // Beispielsatz (oder null, wenn es für das Wort keinen gibt)
-  const example = exampleFor(word.de, SENTENCES);
+  const example = exampleFor(word.de, VISIBLE_SENTENCES);
 
   return (
     <article className="border-river bg-surface rounded-3xl border-b-8 px-5 py-8 text-center md:px-10 md:py-12">

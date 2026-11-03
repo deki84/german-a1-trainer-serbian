@@ -8,7 +8,7 @@ import { useSrs } from "@/hooks/useSrs";
 import { useStore } from "@/hooks/useStore";
 import { newWordsOn, streak } from "@/lib/days";
 import { dayStore, recordSession } from "@/lib/progressStorage";
-import { SENTENCES } from "@/data/sentences";
+import { VISIBLE_SENTENCES } from "@/data/content";
 import { buildAnyQuestion } from "@/lib/gap";
 import { calculateStars } from "@/lib/quiz";
 import { buildDailySession, DAILY_GOAL, type DailyGoal, type SessionItem } from "@/lib/session";
@@ -47,7 +47,7 @@ export function TodayPlayer({ lessons }: { lessons: Lesson[] }) {
   const newCount = preview.filter((entry) => entry.kind === "new").length;
 
   function ask(next: SessionItem) {
-    setQuestion(buildAnyQuestion(next.word, next.pool, next.mode, SENTENCES));
+    setQuestion(buildAnyQuestion(next.word, next.pool, next.mode, VISIBLE_SENTENCES));
     setAttempt((count) => count + 1);
     setPhase("quiz");
   }

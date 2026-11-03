@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { TodayPlayer } from "@/components/TodayPlayer";
-import { LESSONS } from "@/data/lessons";
+import { VISIBLE_LESSONS } from "@/data/content";
 
 export const metadata: Metadata = {
   title: "Današnji trening · Nemački",
@@ -21,7 +21,7 @@ export default function TodayPage() {
         <span aria-hidden="true">📅</span> Današnji trening
       </h1>
 
-      <TodayPlayer lessons={LESSONS} />
+      <TodayPlayer lessons={VISIBLE_LESSONS} />
     </main>
   );
 }

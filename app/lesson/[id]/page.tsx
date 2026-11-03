@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LessonPlayer } from "@/components/LessonPlayer";
-import { LESSONS, getLesson, getNextLesson } from "@/data/lessons";
+import { VISIBLE_LESSONS, getNextVisibleLesson, getVisibleLesson } from "@/data/content";
 
 /**
  * In Next.js 15+ ist params ein Promise und muss mit await gelesen werden.
@@ -15,12 +15,12 @@ type LessonPageProps = {
  * Jede wird vorab als fertiges HTML erzeugt, das lädt am Handy blitzschnell.
  */
 export function generateStaticParams() {
-  return LESSONS.map((lesson) => ({ id: lesson.id }));
+  return VISIBLE_LESSONS.map((lesson) => ({ id: lesson.id }));
 }
 
 export default async function LessonPage({ params }: LessonPageProps) {
   const { id } = await params;
-  const lesson = getLesson(id);
+  const lesson = getVisibleLesson(id);
 
   // Unbekannte ID in der URL → 404-Seite statt Absturz
   if (!lesson) notFound();
@@ -39,7 +39,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
       </h1>
       <p className="text-muted mt-1">{lesson.subtitle}</p>
 
-      <LessonPlayer key={lesson.id} lesson={lesson} nextLesson={getNextLesson(lesson.id)} />
+      <LessonPlayer key={lesson.id} lesson={lesson} nextLesson={getNextVisibleLesson(lesson.id)} />
     </main>
   );
 }

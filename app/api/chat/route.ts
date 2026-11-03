@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import Groq from "groq-sdk";
-import { LESSONS } from "@/data/lessons";
+import { VISIBLE_LESSONS } from "@/data/content";
 import { parseMessages } from "@/lib/chat";
 import { toLatin } from "@/lib/latin";
 import { isRateLimited } from "@/lib/rateLimit";
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
 
   // RAG: passende geprüfte Wörter zur letzten Frage heraussuchen
   const question = messages.at(-1)?.content ?? "";
-  const systemPrompt = buildTutorPrompt(findRelevantWords(question, LESSONS));
+  const systemPrompt = buildTutorPrompt(findRelevantWords(question, VISIBLE_LESSONS));
 
   const groq = new Groq({ apiKey });
 
