@@ -5,10 +5,10 @@ import { LESSONS } from "@/data/lessons";
 import { SENTENCES } from "@/data/sentences";
 
 // Der Schalter wird beim Laden des Moduls gelesen, deshalb jedes Mal frisch importieren
-async function loadContent(flag: string | undefined) {
+async function loadContent(flag: string | undefined, b1Flag?: string) {
   vi.resetModules();
-  if (flag === undefined) vi.stubEnv("NEXT_PUBLIC_ENABLE_A2", "");
-  else vi.stubEnv("NEXT_PUBLIC_ENABLE_A2", flag);
+  vi.stubEnv("NEXT_PUBLIC_ENABLE_A2", flag ?? "");
+  vi.stubEnv("NEXT_PUBLIC_ENABLE_B1", b1Flag ?? "");
   return import("@/data/content");
 }
 
@@ -69,5 +69,26 @@ describe("Niveaus mit eingeschaltetem Schalter", () => {
     const a2Ids = content.lessonsBySection("posao", "a2").map((lesson) => lesson.id);
     expect(a2Ids.length).toBeGreaterThan(0);
     for (const id of a2Ids) expect(a1Ids.has(id)).toBe(false);
+  });
+});
+
+describe("B1 hat einen eigenen Schalter", () => {
+  it("ohne Schalter ist B1 aus, auch wenn A2 an ist", async () => {
+    const content = await loadContent("true");
+    expect(content.B1_ENABLED).toBe(false);
+    expect(content.ENABLED_LEVELS).toEqual(["a1", "a2"]);
+    expect(content.lessonsOf("b1")).toEqual([]);
+  });
+
+  it("nur der Wert 'true' schaltet B1 ein", async () => {
+    expect((await loadContent(undefined, "1")).B1_ENABLED).toBe(false);
+    const content = await loadContent("true", "true");
+    expect(content.B1_ENABLED).toBe(true);
+    expect(content.ENABLED_LEVELS).toEqual(["a1", "a2", "b1"]);
+  });
+
+  it("Standard: nur A1", async () => {
+    const content = await loadContent(undefined);
+    expect(content.ENABLED_LEVELS).toEqual(["a1"]);
   });
 });
